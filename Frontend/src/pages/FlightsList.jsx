@@ -15,22 +15,20 @@ function FlightsList({ searchParams }) {
   }, [searchParams]);
 
   const fetchFlights = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      // אפשר להעביר את הפרמטרים כשאילתא ל-API, אם ה-API תומך בכך
-      // לדוגמה:
-      const query = new URLSearchParams(searchParams).toString();
-      console.log('Fetching flights with query:', query);
-      const response = await api.get(`/flights/search-flights?${query}`);
-
-      setFlights(response.data);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch flights');
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  setError(null);
+  try {
+    const query = new URLSearchParams(searchParams).toString();
+    const response = await api.get(`/flights/search-flights?${query}`);
+    setFlights(response.data);
+  } catch (err) {
+    
+    setError('No flights found for your selection');
+    setFlights([]);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading)
     return (
@@ -38,8 +36,18 @@ function FlightsList({ searchParams }) {
         Loading flights...
       </p>
     );
+
   if (error)
-    return <p style={{ color: 'red', textAlign: 'center' }}>Error: {error}</p>;
+  return (
+    <p style={{ 
+      color: '#3a8df3', 
+      textAlign: 'center', 
+      fontWeight: 'bold', 
+      fontSize: '18px' ,
+    }}>
+      {error}
+    </p>
+  );
 
   if (flights.length === 0)
     return <p style={{ textAlign: 'center', marginTop: '50px' }}>No flights found</p>;

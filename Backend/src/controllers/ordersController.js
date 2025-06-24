@@ -12,7 +12,6 @@ export const createOrder = async (req, res) => {
       num_passengers,
     } = req.body;
 
-    // בדיקה בסיסית שכל הפרמטרים הדרושים קיימים
     if (
       !user_id || !user_name || !user_email || !flight_id ||
       !order_date || !price || !num_passengers
@@ -53,5 +52,6 @@ export const readOrders = async (req, res) => {
       .json({ error: 'Error fetching orders.', details: error.message });
   }
 };
+
 
 

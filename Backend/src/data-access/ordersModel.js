@@ -34,10 +34,10 @@ export const Orders = sequelize.define(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    num_passengers: { // 🆕 שדה חדש
+    num_passengers: { 
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 1, // כברירת מחדל נניח כרטיס אחד
+      defaultValue: 1, 
     },
   },
   {

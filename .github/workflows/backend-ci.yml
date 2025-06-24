@@ -41,7 +41,7 @@ jobs:
       - name: Create .env file
         run: |
           cd Backend
-          echo "DATABASE_URL=postgres://postgres:pass@localhost:5432/flight_booking" > .env
+          echo "DATABASE_URL=postgres://postgres:pass@35.232.83.157:5432/flight_booking" > .env
 
       - name: Install dependencies
         run: |

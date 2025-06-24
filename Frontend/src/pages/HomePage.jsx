@@ -4,7 +4,7 @@ import FlightsList from './FlightsList';
 import './HomePage.css';
 
 function HomePage() {
-  // state לאחסון בחירות המשתמש
+  
   const [searchParams, setSearchParams] = useState({
     origin: '',
     destination: '',
@@ -14,7 +14,7 @@ function HomePage() {
 
   const [showFlights, setShowFlights] = useState(false);
 
-  // handler לעדכון state לפי הקלדה/בחירה
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSearchParams((prev) => ({ ...prev, [name]: value }));
