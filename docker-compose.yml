@@ -8,6 +8,13 @@ services:
     depends_on:
       - db
 
+  frontend:
+    build: ./Frontend
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+
   db:
     image: postgres:15
     restart: always

@@ -16,8 +16,6 @@ app.use(json());
 app.use('/flights', flightsRoutes);
 app.use('/orders', ordersRoutes);
 
-console.log('Flights Booking');
-
 // Initialize the database connection
 initDb()
   .then(() => {
