@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
 import HomePage from './pages/HomePage.jsx';
+import OrderSearchResultsPage from './pages/OrderSearchResultsPage.jsx';
 import './App.css';
 
 function SearchDropdown() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [searchType, setSearchType] = useState('');
-  const [formData, setFormData] = useState({ id: '', email: '', flightNumber: '' });
+  const [formData, setFormData] = useState({ id: ''});
   const navigate = useNavigate();
 
   const toggleDropdown = () => setShowDropdown(!showDropdown);
@@ -21,14 +22,12 @@ function SearchDropdown() {
   const handleSearch = () => {
     setShowModal(false);
     if (searchType === 'id') {
-      navigate(`/search-id?Id=${formData.id}&email=${formData.email}`);
-    } else {
-      navigate(`/search-flight-number?flight=${formData.flightNumber}`);
-    }
+      navigate(`/read-order/${formData.id}`);
+    } 
   };
 
   const resetForm = () => {
-    setFormData({ id: '', email: '', flightNumber: '' });
+    setFormData({ id: ''});
     setShowModal(false);
   };
 
@@ -40,8 +39,7 @@ function SearchDropdown() {
 
       {showDropdown && (
         <div className="dropdown-popup">
-          <button onClick={() => openModal('id')}>Search by ID and Email</button>
-          <button onClick={() => openModal('flight')}>Search by Flight Number</button>
+          <button onClick={() => openModal('id')}>Search by User ID</button>
         </div>
       )}
 
@@ -49,7 +47,7 @@ function SearchDropdown() {
   <div className="modal-overlay">
     <div className="modal">
       <div className="modal-header">
-        <h3>{searchType === 'id' ? 'Search by ID and Email' : 'Search by Flight Number'}</h3>
+        <h3>{searchType === 'id' ? 'Search by User ID' : ''}</h3>
         <button className="close-button" onClick={resetForm}>✖</button>
       </div>
 
@@ -61,21 +59,8 @@ function SearchDropdown() {
             value={formData.id}
             onChange={(e) => setFormData({ ...formData, id: e.target.value })}
           />
-          <input
-            type="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          />
         </>
-      ) : (
-        <input
-          type="text"
-          placeholder="Flight Number"
-          value={formData.flightNumber}
-          onChange={(e) => setFormData({ ...formData, flightNumber: e.target.value })}
-        />
-      )}
+      ) : null}
 
       <div className="modal-buttons">
         <button className="clear-button" onClick={resetForm}>Clear</button>
@@ -103,7 +88,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/search-id" element={<div>Search result by ID and Email</div>} />
-            <Route path="/search-flight-number" element={<div>Search result by Flight Number</div>} />
+            <Route path='/read-orders/:userId' element={<OrderSearchResultsPage />} />
           </Routes>
         </main>
 
