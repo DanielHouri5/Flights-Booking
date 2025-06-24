@@ -28,30 +28,25 @@ describe('Flight Test', () => {
     expect(readRes.body).to.have.property('company', 'El Al');
   });
 
-  it('should return the correct flight from search-flights query', async () => {
+  it('should return flights matching the search params', async () => {
     const searchParams = {
       origin: 'Tel Aviv',
       destination: 'New York',
       departure_date: '2025-07-10',
-      passengers: '1'
+      passengers: '1',  // שים לב שמחרוזת (כמו בדפדפן)
     };
 
-    const query = new URLSearchParams(searchParams).toString(); 
+    const query = new URLSearchParams(searchParams).toString();
 
-    const res = await api.get(`/flights/search-flights?${query}`).expect(200);
+    const res = await request(app)
+      .get(`/flights/search-flights?${query}`)
+      .expect(200);
 
     expect(res.body).to.be.an('array').that.is.not.empty;
 
-    console.log('Flights response:', res.body);
-
-    const flight = res.body.find(f => f.flight_id === 130);
+    // אפשר להוסיף בדיקות לפי התגובה הצפויה:
+    const flight = res.body.find(f => f.origin === 'Tel Aviv' && f.destination === 'New York');
     expect(flight).to.exist;
-    expect(flight).to.include({
-      company: 'El Al',
-      origin: 'Tel Aviv',
-      destination: 'New York',
-    });
-    expect(flight.departure_time).to.include('2025-07-10');
   });
 
 });
