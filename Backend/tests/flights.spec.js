@@ -33,7 +33,7 @@ describe('Flight Test', () => {
       origin: 'Tel Aviv',
       destination: 'New York',
       departure_date: '2025-07-10',
-      passengers: '1',  
+      passengers: '0',
     };
 
     const query = new URLSearchParams(searchParams).toString();
@@ -44,9 +44,10 @@ describe('Flight Test', () => {
 
     expect(res.body).to.be.an('array').that.is.not.empty;
 
-    const flight = res.body.find(f => f.origin === 'Tel Aviv' && f.destination === 'New York');
+    const flight = res.body.find(
+      (f) => f.origin === 'Tel Aviv' && f.destination === 'New York'
+    );
     expect(flight).to.exist;
   });
   console.log('Flight tests completed successfully');
 });
-
