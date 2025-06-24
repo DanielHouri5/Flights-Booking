@@ -11,6 +11,7 @@ export const ordersService = {
         user_email,
         flight_id,
         order_date,
+        price,
         num_passengers,
       } = orderData;
 
@@ -25,10 +26,8 @@ export const ordersService = {
           throw new Error('Not enough seats available');
         }
 
-        flight.seats_available -= passengers;
+        flight.seats_available -= num_passengers;
         await flight.save({ transaction: t });
-
-        const totalPrice = passengers * flight.price;
 
         const newOrder = await Orders.create(
           {
@@ -37,8 +36,8 @@ export const ordersService = {
             user_email,
             flight_id,
             order_date,
-            price: totalPrice,
-            num_passengers: passengers,
+            price,
+            passengers,
           },
           { transaction: t }
         );
@@ -50,7 +49,6 @@ export const ordersService = {
       throw new Error('Failed to create order');
     }
   },
-
   async fetchOrdersById(userId) {
     try {
       return await Orders.findAll({
