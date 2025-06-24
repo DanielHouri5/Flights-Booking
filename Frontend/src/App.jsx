@@ -23,21 +23,13 @@ function PrivacyPage() {
   );
 }
 
-function SearchDropdown({ isOpen, onClose }) {
-  const [showModal, setShowModal] = useState(false);
-  const [searchType, setSearchType] = useState('');
-  const [formData, setFormData] = useState({ id: ''});
+function SearchModal({ isOpen, onClose }) {
+  const [formData, setFormData] = useState({ id: '' });
   const navigate = useNavigate();
 
-  const openModal = (type) => {
-    setSearchType(type);
-    setShowModal(true);
-    onClose();  // סוגר את הדרופדאון כשפותחים מודאל
-  };
-
   const resetForm = () => {
-    setFormData({ id: ''});
-    setShowModal(false);
+    setFormData({ id: '' });
+    onClose();
   };
 
   const handleSearch = () => {
@@ -45,63 +37,47 @@ function SearchDropdown({ isOpen, onClose }) {
       alert('Please enter an ID');
       return;
     }
-    setShowModal(false);
-    if (searchType === 'id') {
-      navigate(`/orders/read-orders/${formData.id}`);
-    }
+    onClose();
+    navigate(`/orders/read-orders/${formData.id}`);
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className="dropdown-wrapper">
-      {/* אפשר להוסיף כפתור לשליטה פנימית אם תרצה */}
-      {/* <button className="dropdown-button" onClick={isOpen ? onClose : () => {}}>Search Order ▼</button> */}
-
-      {isOpen && (
-        <div className="dropdown-popup">
-          <button onClick={() => openModal('id')}>Search by User ID</button>
-          <button onClick={onClose} style={{ marginLeft: '10px' }}>Close</button>
+    <div className="modal-overlay">
+      <div className="modal">
+        <div className="modal-header">
+          <h3>Search by User ID</h3>
+          <button className="close-button" onClick={resetForm}>✖</button>
         </div>
-      )}
 
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-header">
-              <h3>{searchType === 'id' ? 'Search by User ID' : ''}</h3>
-              <button className="close-button" onClick={resetForm}>✖</button>
-            </div>
+        <input
+          type="text"
+          placeholder="ID Number"
+          value={formData.id}
+          onChange={(e) => setFormData({ ...formData, id: e.target.value })}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleSearch();
+            }
+          }}
+        />
 
-            {searchType === 'id' && (
-              <input
-                type="text"
-                placeholder="ID Number"
-                value={formData.id}
-                onChange={(e) => setFormData({ ...formData, id: e.target.value })}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSearch();
-                  }
-                }}
-              />
-            )}
-
-            <div className="modal-buttons">
-              <button className="clear-button" onClick={resetForm}>Clear</button>
-              <button className="submit-button" onClick={handleSearch}>Submit</button>
-            </div>
-          </div>
+        <div className="modal-buttons">
+          <button className="clear-button" onClick={resetForm}>Clear</button>
+          <button className="submit-button" onClick={handleSearch}>Submit</button>
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
 function App() {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
 
-  const openDropdown = () => setDropdownOpen(true);
-  const closeDropdown = () => setDropdownOpen(false);
+  const openSearchModal = () => setSearchModalOpen(true);
+  const closeSearchModal = () => setSearchModalOpen(false);
 
   return (
     <Router>
@@ -110,14 +86,7 @@ function App() {
           <h1>SkyFlights</h1>
           <nav className="nav-links">
             <Link to="/" className="nav-link">Home</Link>
-            {/* כפתור שמפתח את דרופדאון החיפוש */}
-            <button onClick={openDropdown} className="nav-link link-button">My Orders</button>
-
-            {/* דרופדאון חיפוש */}
-            <SearchDropdown
-              isOpen={dropdownOpen}
-              onClose={closeDropdown}
-            />
+            <Link to="#" onClick={openSearchModal} className="nav-link">My Orders</Link>
           </nav>
         </header>
 
@@ -137,6 +106,9 @@ function App() {
             <Link to="/terms">Terms</Link> | <Link to="/privacy">Privacy</Link>
           </div>
         </footer>
+
+        {/* הצגת מודאל לחיפוש לפי ת"ז */}
+        <SearchModal isOpen={searchModalOpen} onClose={closeSearchModal} />
       </div>
     </Router>
   );

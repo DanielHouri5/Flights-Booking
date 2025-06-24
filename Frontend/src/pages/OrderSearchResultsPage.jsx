@@ -6,7 +6,7 @@ import api from '../services/api.js';
 
 
 function UserOrdersPage() {
-  const { userId } = useParams(); // מקבל את ה-ID מהכתובת
+  const { userId } = useParams(); 
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,24 +30,38 @@ function UserOrdersPage() {
     }
   };
 
-  if (loading)
-    return (
-      <p style={{ textAlign: 'center', marginTop: '50px' }}>
-        Loading orders...
-      </p>
-    );
-    
-  if (error)
+if (loading)
+  return (
+    <p style={{ textAlign: 'center', marginTop: '50px' }}>
+      Loading orders...
+    </p>
+  );
+
+if (error)
   return (
     <p style={{ 
       color: '#3a8df3', 
       textAlign: 'center', 
       fontWeight: 'bold', 
-      fontSize: '18px' ,
+      fontSize: '18px',
     }}>
       {error}
     </p>
   );
+
+if (orders.length === 0)
+  return (
+    <p style={{ 
+      color: '#3a8df3', 
+      textAlign: 'center', 
+      fontWeight: 'bold', 
+      fontSize: '18px',
+      marginTop: '50px'
+    }}>
+      No orders found for this ID.
+    </p>
+  );
+
 
   return (
     <div className="orders-list-wrapper">
