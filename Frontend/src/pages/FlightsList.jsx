@@ -22,7 +22,7 @@ function FlightsList({ searchParams }) {
     const response = await api.get(`/flights/search-flights?${query}`);
     setFlights(response.data);
   } catch (err) {
-    // תמיד מציג את אותה הודעה בלי קשר לסיבת השגיאה
+    
     setError('No flights found for your selection');
     setFlights([]);
   } finally {
