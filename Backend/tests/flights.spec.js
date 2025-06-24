@@ -9,7 +9,7 @@ const { expect } = chai;
 let server;
 
 describe('Flight Test', () => {
-  const flightId = 1;
+  const flightId = 130;
 
   before(async function () {
     this.timeout(10000);
@@ -28,12 +28,26 @@ describe('Flight Test', () => {
     expect(readRes.body).to.have.property('company', 'El Al');
   });
 
-  it('should return a list of all flights', async () => {
-    const res = await request(app).get('/flights/read-all-flights').expect(200);
+  it('should return the correct flight from search-flights query', async () => {
+    const res = await request(app)
+      .get('/flights/search-flights')
+      .query({
+        origin: 'Tel Aviv',
+        destination: 'New York',
+        departure_date: '2025-07-10',
+        passengers: 1
+      })
+      .expect(200);
 
-    expect(res.body).to.be.an('array');
-    expect(res.body.length).to.be.greaterThan(0);
-    expect(res.body[0]).to.have.property('flight_id');
-    expect(res.body[0]).to.have.property('company');
+    expect(res.body).to.be.an('array').that.is.not.empty;
+
+    const flight = res.body.find(f => f.flight_id === 130);
+    expect(flight).to.exist;
+    expect(flight).to.include({
+      company: 'El Al',
+      origin: 'Tel Aviv',
+      destination: 'New York',
+    });
+    expect(flight.departure_time).to.include('2025-07-10');
   });
 });

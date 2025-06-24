@@ -15,7 +15,7 @@ export async function initDb(retries = 10, delay = 2000) {
       if (process.env.NODE_ENV !== 'test') {
         await seedDb();
       }
-
+      
       return;
     } catch (err) {
       console.error('❌ DB connection failed:', err.message);
