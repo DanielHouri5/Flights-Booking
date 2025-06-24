@@ -24,10 +24,10 @@ describe('Order Test', () => {
       user_id: userId,
       user_name: 'Test User',
       user_email: 'test@example.com',
-      flight_id: 130,
+      flight_id: 1,
       order_date: new Date().toISOString(),
       price: 123.45,
-      num_passengers: '2', 
+      num_passengers: '2',
     };
 
     const res = await request(app)
@@ -38,7 +38,7 @@ describe('Order Test', () => {
     expect(res.body).to.have.property('order');
     expect(res.body.order).to.have.property('order_id');
     expect(res.body.order.user_name).to.equal('Test User');
-    createdOrder = res.body.order; 
+    createdOrder = res.body.order;
   });
 
   it('should fetch orders for a user', async () => {
@@ -48,7 +48,9 @@ describe('Order Test', () => {
 
     expect(res.body).to.be.an('array');
     expect(res.body.length).to.be.greaterThan(0);
-    const found = res.body.find(order => order.order_id === createdOrder.order_id);
+    const found = res.body.find(
+      (order) => order.order_id === createdOrder.order_id
+    );
     expect(found).to.exist;
     expect(found.user_email).to.equal('test@example.com');
   });
