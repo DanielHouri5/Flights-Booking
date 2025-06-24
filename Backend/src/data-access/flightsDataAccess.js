@@ -2,7 +2,6 @@
 import { sequelize } from './db.js';
 import './flightsModel.js';
 import './ordersModel.js';
-import { seedDb } from './seed.js';
 
 export async function initDb(retries = 10, delay = 2000) {
   while (retries > 0) {
@@ -11,12 +10,6 @@ export async function initDb(retries = 10, delay = 2000) {
       console.log('✅ Connected to DB');
       await sequelize.sync({ alter: true });
 
-      /*
-      if (process.env.NODE_ENV !== 'test') {
-        await seedDb();
-      }
-      */
-     
       return;
     } catch (err) {
       console.error('❌ DB connection failed:', err.message);
@@ -31,4 +24,3 @@ export async function initDb(retries = 10, delay = 2000) {
     '❌ Could not connect to the database after multiple attempts'
   );
 }
-
