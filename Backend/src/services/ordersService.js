@@ -1,6 +1,6 @@
-// src/services/ordersService.js
-
 import { Orders } from '../data-access/ordersModel.js';
+import { Flights } from '../data-access/flightsModel.js';
+import { sequelize } from '../data-access/db.js';
 
 export const ordersService = {
   async createOrder(orderData) {
@@ -12,38 +12,52 @@ export const ordersService = {
         flight_id,
         order_date,
         price,
+        num_passengers,
       } = orderData;
 
-      console.log('from order service', orderData);
+      return await sequelize.transaction(async (t) => {
+        const flight = await Flights.findByPk(flight_id, { transaction: t });
+        if (!flight) {
+          throw new Error('Flight not found');
+        }
 
-      const newOrder = await Orders.create({
-        user_id: user_id,
-        user_name: user_name ,
-        user_email: user_email,
-        flight_id: flight_id,
-        order_date: order_date,
-        price: price,
+        const passengers = parseInt(num_passengers);
+        if (flight.seats_available < passengers) {
+          throw new Error('Not enough seats available');
+        }
+
+        flight.seats_available -= num_passengers;
+        await flight.save({ transaction: t });
+
+        const newOrder = await Orders.create(
+          {
+            user_id,
+            user_name,
+            user_email,
+            flight_id,
+            order_date,
+            price,
+            passengers,
+          },
+          { transaction: t }
+        );
+
+        return newOrder;
       });
-
-      return newOrder;
     } catch (err) {
-      console.error('Error creating order:', err);
+      console.error('Error creating order with seat update:', err);
       throw new Error('Failed to create order');
     }
   },
-
   async fetchOrdersById(userId) {
     try {
-      const orders = await Orders.findAll({
-        where: {user_id: userId}, 
+      return await Orders.findAll({
+        where: { user_id: userId },
+        order: [['order_date', 'DESC']],
       });
-      if (!orders || orders.length === 0) {
-        throw new Error('orders not found');
-      }
-      return orders;
-    } catch (err) {
-      console.error('Error fetching orders by userID:', err);
-      throw new Error('Failed to fetch orders');
+    } catch (error) {
+      console.error('Error fetching orders by user ID:', error);
+      throw error;
     }
   },
 };

@@ -1,4 +1,4 @@
-// src/index.js
+//src/index.js
 import 'dotenv/config';
 import express, { json } from 'express';
 import flightsRoutes from './routes/flightsRoutes.js';
@@ -29,3 +29,4 @@ initDb()
     console.error('Database connection failed:', err.message);
     process.exit(1);
   });
+      
