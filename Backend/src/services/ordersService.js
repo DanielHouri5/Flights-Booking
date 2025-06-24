@@ -4,48 +4,50 @@ import { sequelize } from '../data-access/db.js';
 
 export const ordersService = {
   async createOrder(orderData) {
-    try {
-      const {
+  try {
+    const {
+      user_id,
+      user_name,
+      user_email,
+      flight_id,
+      order_date,
+      num_passengers,
+    } = orderData;
+
+    return await sequelize.transaction(async (t) => {
+      const flight = await Flights.findByPk(flight_id, { transaction: t });
+      if (!flight) {
+        throw new Error('Flight not found');
+      }
+
+      const passengers = parseInt(num_passengers);
+      if (flight.seats_available < passengers) {
+        throw new Error('Not enough seats available');
+      }
+
+      flight.seats_available -= passengers;
+      await flight.save({ transaction: t });
+
+      const totalPrice = passengers * flight.price;
+
+      const newOrder = await Orders.create({
         user_id,
         user_name,
         user_email,
         flight_id,
         order_date,
-        price,
-        num_passengers,
-      } = orderData;
+        price: totalPrice,
+        num_passengers: passengers,
+      }, { transaction: t });
 
-      return await sequelize.transaction(async (t) => {
-        const flight = await Flights.findByPk(flight_id, { transaction: t });
-        if (!flight) {
-          throw new Error('Flight not found');
-        }
-
-        const passengers = parseInt(num_passengers);
-        if (flight.seats_available < passengers) {
-          throw new Error('Not enough seats available');
-        }
-
-        flight.seats_available -= num_passengers;
-        await flight.save({ transaction: t });
-
-        const newOrder = await Orders.create({
-          user_id,
-          user_name,
-          user_email,
-          flight_id,
-          order_date,
-          price,
-          passengers,
-        }, { transaction: t });
-
-        return newOrder;
-      });
+      return newOrder;
+    });
     } catch (err) {
       console.error('Error creating order with seat update:', err);
       throw new Error('Failed to create order');
     }
   },
+  
   async fetchOrdersById(userId) {
     try {
       return await Orders.findAll({
