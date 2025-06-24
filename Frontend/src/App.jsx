@@ -22,7 +22,7 @@ function SearchDropdown() {
   const handleSearch = () => {
     setShowModal(false);
     if (searchType === 'id') {
-      navigate(`/read-order/${formData.id}`);
+      navigate(`/orders/read-orders/${formData.id}`);
     } 
   };
 
@@ -87,8 +87,8 @@ function App() {
         <main className="content">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/search-id" element={<div>Search result by ID and Email</div>} />
-            <Route path='/read-orders/:userId' element={<OrderSearchResultsPage />} />
+            <Route path="/search-id" element={<div>Search result by ID</div>} />
+            <Route path="/orders/read-orders/:userId" element={<OrderSearchResultsPage />} />
           </Routes>
         </main>
 

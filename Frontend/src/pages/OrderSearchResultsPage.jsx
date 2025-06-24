@@ -19,7 +19,8 @@ function UserOrdersPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await api.get(`/orders/read-orders/${userId}`);
+      const query = new URLSearchParams(userId).toString();
+      const response = await api.get(`/orders/read-orders/${userId}`)
       setOrders(response.data);
     } catch (err) {
       setError('No orders found for your id number');
@@ -48,13 +49,10 @@ function UserOrdersPage() {
     </p>
   );
 
-  if (orders.length === 0)
-    return <p style={{ textAlign: 'center', marginTop: '50px' }}>No orders found</p>;
-
   return (
     <div className="orders-list-wrapper">
       {orders.map((order) => (
-        <div key={order.userId} className="order-card-wrapper">
+        <div key={order.order_id} className="order-card-wrapper">
           <OrderCard order={order} />
         </div>
       ))}
