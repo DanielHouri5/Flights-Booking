@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import BookingFlightCard from '../components/bookingFlightCard'; 
-import './CreateOrderPage.css';  
+import BookingFlightCard from '../components/BookingFlightCard';
+import './CreateOrderPage.css';
 
 function CreateOrderPage() {
   const location = useLocation();
@@ -15,7 +15,7 @@ function CreateOrderPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [userId, setUserId] = useState('');
-  const [orderCompleted, setOrderCompleted] = useState(false);  // <-- הוספתי כאן
+  const [orderCompleted, setOrderCompleted] = useState(false); // <-- הוספתי כאן
 
   if (!flight) {
     return (
@@ -23,7 +23,9 @@ function CreateOrderPage() {
         <div className="order-container">
           <h2>No flight selected</h2>
           <p>Please go back and select a flight to book.</p>
-          <button className="book-btn" onClick={() => navigate('/')}>Back to Search</button>
+          <button className="book-btn" onClick={() => navigate('/')}>
+            Back to Search
+          </button>
         </div>
       </div>
     );
@@ -32,56 +34,62 @@ function CreateOrderPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!userName.trim() || !userEmail.trim() || passengers < 1 || !userId.trim()) {
-        setError('Please fill in all fields correctly.');
-        setSuccess('');
-        return;
+    if (
+      !userName.trim() ||
+      !userEmail.trim() ||
+      passengers < 1 ||
+      !userId.trim()
+    ) {
+      setError('Please fill in all fields correctly.');
+      setSuccess('');
+      return;
     }
 
     const orderData = {
-        user_id: userId,
-        user_name: userName,
-        user_email: userEmail,
-        flight_id: flight.flight_id,
-        order_date: new Date().toISOString(),
-        price: flight.price * passengers,
-        num_passengers: passengers
+      user_id: userId,
+      user_name: userName,
+      user_email: userEmail,
+      flight_id: flight.flight_id,
+      order_date: new Date().toISOString(),
+      price: flight.price * passengers,
+      num_passengers: passengers,
     };
 
     try {
-        const response = await fetch('http://localhost:8080/orders/create-order', {
+      const response = await fetch(
+        'http://localhost:8080/orders/create-order',
+        {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(orderData),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error || 'Failed to create order');
         }
+      );
 
-        setSuccess('Order created successfully');
-        setError('');
-        setOrderCompleted(true);  
+      const data = await response.json();
 
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create order');
+      }
 
+      setSuccess('Order created successfully');
+      setError('');
+      setOrderCompleted(true);
     } catch (err) {
-        setError(err.message);
-        setSuccess('');
+      setError(err.message);
+      setSuccess('');
     }
   };
 
   if (orderCompleted) {
-  return (
-    <div className="create-order">
-      <div className="order-container success-completed">
-        <h2>Order successfully placed!</h2>
-        <p>You can view it in My Orders.</p>
+    return (
+      <div className="create-order">
+        <div className="order-container success-completed">
+          <h2>Order successfully placed!</h2>
+          <p>You can view it in My Orders.</p>
+        </div>
       </div>
-    </div>
-  );
-    }
+    );
+  }
 
   return (
     <div className="create-order">
@@ -105,10 +113,10 @@ function CreateOrderPage() {
           <label>
             ID Number:
             <input
-                type="text"
-                value={userId}
-                onChange={(e) => setUserId(e.target.value)}
-                placeholder="Enter your ID number"
+              type="text"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              placeholder="Enter your ID number"
             />
           </label>
 
@@ -124,7 +132,10 @@ function CreateOrderPage() {
 
           <label>
             Passengers:
-            <select value={passengers} onChange={(e) => setPassengers(Number(e.target.value))}>
+            <select
+              value={passengers}
+              onChange={(e) => setPassengers(Number(e.target.value))}
+            >
               {[...Array(10).keys()].map((i) => (
                 <option key={i + 1} value={i + 1}>
                   {i + 1}
@@ -134,7 +145,8 @@ function CreateOrderPage() {
           </label>
           {flight.price && passengers > 0 && (
             <div className="total-price">
-                Total price: <strong>${(flight.price * passengers).toFixed(2)}</strong>
+              Total price:{' '}
+              <strong>${(flight.price * passengers).toFixed(2)}</strong>
             </div>
           )}
 
