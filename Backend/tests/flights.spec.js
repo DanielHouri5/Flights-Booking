@@ -29,12 +29,13 @@ describe('Flight Test', () => {
   });
 
   it('should return the correct flight from search-flights query', async () => {
+  
   const res = await request(app)
     .get(`/flights/search-flights?${new URLSearchParams({
       origin: 'Tel Aviv',
       destination: 'New York',
       departure_date: '2025-07-10',
-      passengers: 1
+      passengers: '1'
     }).toString()}`)   
     .expect(200);
 
