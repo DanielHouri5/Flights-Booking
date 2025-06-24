@@ -2,11 +2,11 @@ name: CI - Frontend
 
 on:
   push:
-    branches: ['main']
+    branches: ['main', 'development']
     paths:
       - 'Frontend/**'
   pull_request:
-    branches: ['main']
+    branches: ['main', 'development']
     paths:
       - 'Frontend/**'
 
@@ -42,3 +42,5 @@ jobs:
       #   run: |
       #     cd Frontend
       #     npm run test
+
+      # deploy-to-cloud-run:

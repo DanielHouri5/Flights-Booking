@@ -2,11 +2,11 @@ name: CI - Backend
 
 on:
   push:
-    branches: ['main']
+    branches: ['main', 'development']
     paths:
       - 'Backend/**'
   pull_request:
-    branches: ['main']
+    branches: ['main', 'development']
     paths:
       - 'Backend/**'
 
@@ -79,7 +79,7 @@ jobs:
       - name: Configure Docker for GCR
         run: gcloud auth configure-docker gcr.io --quiet
 
-      - name: Build and push Docker image
+      - name: Build and push Backend Docker image
         run: |
           docker build -t gcr.io/devops-workshop-462511/flights-backend Backend/
           docker push gcr.io/devops-workshop-462511/flights-backend
