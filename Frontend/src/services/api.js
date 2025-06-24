@@ -1,8 +1,10 @@
-// frontend/src/services/api.js
+// Frontend/src/services/api.js
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://flights-backend-1085375047232.us-central1.run.app',
+  baseURL: 'http://localhost:8080',
+  // baseURL: 'https://flights-backend-1085375047232.us-central1.run.app',
+  // baseURL: 'http://backend:8080',
 });
 
 api.interceptors.request.use(

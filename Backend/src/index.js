@@ -1,4 +1,4 @@
-// src/index.js
+//src/index.js
 import 'dotenv/config';
 import express, { json } from 'express';
 import flightsRoutes from './routes/flightsRoutes.js';
@@ -9,14 +9,16 @@ import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+  })
+);
 
 app.use(json());
 
 app.use('/flights', flightsRoutes);
 app.use('/orders', ordersRoutes);
-
-console.log('Flights Booking');
 
 // Initialize the database connection
 initDb()
@@ -31,3 +33,5 @@ initDb()
     console.error('Database connection failed:', err.message);
     process.exit(1);
   });
+
+console.log('');

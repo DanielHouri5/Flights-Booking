@@ -41,7 +41,7 @@ jobs:
       - name: Create .env file
         run: |
           cd Backend
-          echo "DATABASE_URL=postgres://postgres:pass@localhost:5432/flight_booking" > .env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
 
       - name: Install dependencies
         run: |
