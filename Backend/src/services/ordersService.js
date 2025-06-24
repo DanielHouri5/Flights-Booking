@@ -22,8 +22,8 @@ export const ordersService = {
           throw new Error('Flight not found');
         }
 
-        // 2. בדיקת זמינות מקומות
-        if (flight.seats_available < num_passengers) {
+        const passengers = parseInt(num_passengers);
+        if (flight.seats_available < passengers) {
           throw new Error('Not enough seats available');
         }
 
@@ -39,7 +39,7 @@ export const ordersService = {
           flight_id,
           order_date,
           price,
-          num_passengers,
+          passengers,
         }, { transaction: t });
 
         return newOrder;

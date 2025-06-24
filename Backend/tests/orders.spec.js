@@ -24,7 +24,7 @@ describe('Order Test', () => {
       user_id: userId,
       user_name: 'Test User',
       user_email: 'test@example.com',
-      flight_id: 1,
+      flight_id: 130,
       order_date: new Date().toISOString(),
       price: 123.45,
       num_passengers: 2, // חובה לפי הקונטרולר
