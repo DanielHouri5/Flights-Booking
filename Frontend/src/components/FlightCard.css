@@ -88,6 +88,13 @@
   z-index: 1;
 }
 
+.flight-card__per-person {
+  font-size: 0.65rem;         /* ממש קטן */
+  color: #999;                /* אפור בהיר */
+  text-align: left;           /* מיושר שמאלה */
+  margin-top: 2px;
+}
+
 /* button */
 .flight-card__book-btn {
   padding: 10px 16px;
