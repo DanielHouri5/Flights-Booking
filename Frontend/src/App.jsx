@@ -107,7 +107,6 @@ function App() {
           </div>
         </footer>
 
-        {/* הצגת מודאל לחיפוש לפי ת"ז */}
         <SearchModal isOpen={searchModalOpen} onClose={closeSearchModal} />
       </div>
     </Router>
