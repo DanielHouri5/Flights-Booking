@@ -59,6 +59,14 @@
   background-color: #0056b3;
 }
 
+.search-button {
+  grid-column: 1 / -1; 
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+
 /* =====================
    Responsive Tweaks
 ===================== */
