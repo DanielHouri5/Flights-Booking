@@ -16,7 +16,6 @@ export const ordersService = {
       } = orderData;
 
       return await sequelize.transaction(async (t) => {
-        // 1. שליפת טיסה
         const flight = await Flights.findByPk(flight_id, { transaction: t });
         if (!flight) {
           throw new Error('Flight not found');
@@ -27,11 +26,9 @@ export const ordersService = {
           throw new Error('Not enough seats available');
         }
 
-        // 3. עדכון כמות מקומות
         flight.seats_available -= num_passengers;
         await flight.save({ transaction: t });
 
-        // 4. יצירת הזמנה
         const newOrder = await Orders.create({
           user_id,
           user_name,
@@ -49,4 +46,16 @@ export const ordersService = {
       throw new Error('Failed to create order');
     }
   },
+  async fetchOrdersById(userId) {
+    try {
+      return await Orders.findAll({
+        where: { user_id: userId },
+        order: [['order_date', 'DESC']], // אופציונלי: סדר לפי תאריך
+      });
+    } catch (error) {
+      console.error('Error fetching orders by user ID:', error);
+      throw error;
+    }
+  },
+
 };
