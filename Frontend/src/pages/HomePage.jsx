@@ -59,7 +59,9 @@ function HomePage() {
             <option value="2">2</option>
             <option value="3">3</option>
           </select>
+          <div className="search-button">
           <button onClick={handleSearchClick}>Search Flights</button>
+        </div>
         </div>
       </section>
 
