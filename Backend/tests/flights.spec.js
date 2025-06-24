@@ -29,18 +29,18 @@ describe('Flight Test', () => {
   });
 
   it('should return the correct flight from search-flights query', async () => {
-  
-  const res = await request(app)
-    .get(`/flights/search-flights?${new URLSearchParams({
+    searchParams = {
       origin: 'Tel Aviv',
-      destination: 'New York',
-      departure_date: '2025-07-10',
-      passengers: '1'
-    }).toString()}`)   
-    .expect(200);
+        destination: 'New York',
+        departure_date: '2025-07-10',
+        passengers: '1'
+    };
+    const query = new URLSearchParams(searchParams).toString(); 
+    const req = await api.get(`/flights/search-flights?${query}`).expect(200);
 
     expect(res.body).to.be.an('array').that.is.not.empty;
-
+    console.log('Flights response:', res.body);
+    
     const flight = res.body.find(f => f.flight_id === 130);
     expect(flight).to.exist;
     expect(flight).to.include({
