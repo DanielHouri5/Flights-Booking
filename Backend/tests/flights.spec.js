@@ -47,5 +47,5 @@ describe('Flight Test', () => {
     const flight = res.body.find(f => f.origin === 'Tel Aviv' && f.destination === 'New York');
     expect(flight).to.exist;
   });
-
+  console.log('Flight tests completed successfully');
 });
