@@ -33,7 +33,7 @@ describe('Flight Test', () => {
       origin: 'Tel Aviv',
       destination: 'New York',
       departure_date: '2025-07-10',
-      passengers: '0',
+      passengers: '1',
     };
 
     const query = new URLSearchParams(searchParams).toString();
