@@ -9,5 +9,6 @@ const router = Router();
 
 router.post('/create-order', createOrder);
 router.get('/read-orders/:userId', readOrders);
+router.get('/read-order/:flightId', readOrders);
 
 export default router;
