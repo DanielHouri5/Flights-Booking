@@ -27,7 +27,7 @@ describe('Order Test', () => {
       flight_id: 130,
       order_date: new Date().toISOString(),
       price: 123.45,
-      num_passengers: 2, // חובה לפי הקונטרולר
+      num_passengers: '2', 
     };
 
     const res = await request(app)
