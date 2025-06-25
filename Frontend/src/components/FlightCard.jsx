@@ -13,7 +13,7 @@ function FlightCard({ flight }) {
     departure_date,
     arrival_date,
     price,
-    passengers = 1, // ברירת מחדל
+    passengers = 1, 
   } = flight;
 
   const departure_time = new Date(departure_date).toLocaleTimeString([], {
