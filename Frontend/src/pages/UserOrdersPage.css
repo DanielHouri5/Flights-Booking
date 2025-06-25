@@ -1,0 +1,73 @@
+.orders-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+}
+
+.order-card-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 16px; /* קטן יותר */
+  display: flex;
+  justify-content: center;
+}
+
+.order-card {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: l;
+  font-size: 0.9rem;
+}
+
+.order-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #2c3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.flight-section {
+  margin-bottom: 16px;
+}
+
+.order-info {
+  background-color: #f4f6f9;
+  padding: 14px;
+  border-radius: 8px;
+  border-top: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+.order-info h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #34495e;
+}
+
+.order-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  font-size: 0.85rem;
+  color: #333;
+  text-align: left;
+}
+
+.status-message {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 30px;
+  color: #3a8df3;
+}
+
+.status-message.error {
+  color: #d9534f;
+}

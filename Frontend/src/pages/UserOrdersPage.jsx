@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import OrderCard from '../components/OrderCard';
 import api from '../services/api.js';
+<<<<<<< HEAD:Frontend/src/pages/OrderSearchResultsPage.jsx
+=======
+import './UserOrdersPage.css';
+>>>>>>> development:Frontend/src/pages/UserOrdersPage.jsx
 
 function UserOrdersPage() {
   const { userId } = useParams(); 

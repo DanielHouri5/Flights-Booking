@@ -37,3 +37,14 @@ export const searchFlights = async (req, res) => {
       .json({ error: 'Error searching for flights', details: error.message });
   }
 };
+
+export const getNearestFlights = async (req, res) => {
+  try {
+    const now = new Date();
+    const flights = await flightsService.fetchNearestFlights(now, 10);
+    res.status(200).json(flights);
+  } catch (error) {
+    console.error('Error in getNearestFlights:', error);
+    res.status(500).json({ error: 'Error fetching nearest flights', details: error.message });
+  }
+};

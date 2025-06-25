@@ -1,10 +1,9 @@
-// Frontend/src/pages/HomePage.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FlightsList from './FlightsList';
 import './HomePage.css';
+import api from '../services/api.js';
 
 function HomePage() {
-  
   const [searchParams, setSearchParams] = useState({
     origin: '',
     destination: '',
@@ -13,16 +12,42 @@ function HomePage() {
   });
 
   const [showFlights, setShowFlights] = useState(false);
+  const [nearestFlights, setNearestFlights] = useState([]);
 
-  
+  useEffect(() => {
+    const fetchNearestFlights = async () => {
+      try {
+        const response = await api.get('/flights/nearest-flights');
+        setNearestFlights(response.data);
+      } catch (err) {
+        console.error('Failed to load nearest flights:', err);
+      }
+    };
+
+    fetchNearestFlights();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setSearchParams((prev) => ({ ...prev, [name]: value }));
+    const trimmedValue = typeof value === 'string' ? value.trim() : value;
+
+    setSearchParams((prev) => ({
+      ...prev,
+      [name]: trimmedValue,
+    }));
   };
 
   const handleSearchClick = () => {
     setShowFlights(true);
   };
+
+  // פונקציה לחלוקת מערך לשני חצאים
+  const splitArrayInHalf = (arr) => {
+    const mid = Math.ceil(arr.length / 2);
+    return [arr.slice(0, mid), arr.slice(mid)];
+  };
+
+  const [leftFlights, rightFlights] = splitArrayInHalf(nearestFlights);
 
   return (
     <div>
@@ -55,18 +80,40 @@ function HomePage() {
             value={searchParams.passengers}
             onChange={handleInputChange}
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+            {[...Array(10)].map((_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
           </select>
           <div className="search-button">
-          <button onClick={handleSearchClick}>Search Flights</button>
-        </div>
+            <button onClick={handleSearchClick}>Search Flights</button>
+          </div>
         </div>
       </section>
 
       <section className="featured-section">
-        {showFlights && <FlightsList searchParams={searchParams} />}
+        {showFlights ? (
+          <div className="flights-column flights-single-column">
+            <FlightsList searchParams={searchParams} />
+          </div>
+        ) : (
+          <>
+            <h2>Upcoming Flights</h2>
+            {nearestFlights.length > 0 ? (
+              <div className="flights-double-column">
+                <div className="flights-column">
+                  <FlightsList flights={leftFlights} />
+                </div>
+                <div className="flights-column">
+                  <FlightsList flights={rightFlights} />
+                </div>
+              </div>
+            ) : (
+              <p style={{ textAlign: 'center' }}>Loading nearest flights...</p>
+            )}
+          </>
+        )}
       </section>
     </div>
   );

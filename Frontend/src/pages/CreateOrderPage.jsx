@@ -11,11 +11,12 @@ function CreateOrderPage() {
 
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [passengers, setPassengers] = useState(flight ? 1 : 0);
+  const [userId, setUserId] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [userId, setUserId] = useState('');
-  const [orderCompleted, setOrderCompleted] = useState(false); // <-- הוספתי כאן
+  const [orderCompleted, setOrderCompleted] = useState(false);
+
+  const passengers = flight?.passengers || 1; // Default to 1 if not provided
 
   if (!flight) {
     return (
@@ -34,12 +35,7 @@ function CreateOrderPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !userName.trim() ||
-      !userEmail.trim() ||
-      passengers < 1 ||
-      !userId.trim()
-    ) {
+    if (!userName.trim() || !userEmail.trim() || passengers < 1 || !userId.trim()) {
       setError('Please fill in all fields correctly.');
       setSuccess('');
       return;
@@ -52,7 +48,7 @@ function CreateOrderPage() {
       flight_id: flight.flight_id,
       order_date: new Date().toISOString(),
       price: flight.price * passengers,
-      num_passengers: passengers,
+      num_passengers: String(passengers), // 👈 כניסה כטקסט
     };
 
     try {
@@ -95,6 +91,7 @@ function CreateOrderPage() {
     <div className="create-order">
       <div className="order-container">
         <h2>Book your flight</h2>
+
         <div key={flight.flight_id} className="flight-card-wrapper">
           <BookingFlightCard flight={flight} />
         </div>
@@ -131,22 +128,12 @@ function CreateOrderPage() {
           </label>
 
           <label>
-            Passengers:
-            <select
-              value={passengers}
-              onChange={(e) => setPassengers(Number(e.target.value))}
-            >
-              {[...Array(10).keys()].map((i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1}
-                </option>
-              ))}
-            </select>
+            Passengers selected: <strong>{passengers}</strong>
           </label>
+
           {flight.price && passengers > 0 && (
             <div className="total-price">
-              Total price:{' '}
-              <strong>${(flight.price * passengers).toFixed(2)}</strong>
+              Total price: <strong>${(flight.price * passengers).toFixed(2)}</strong>
             </div>
           )}
 
