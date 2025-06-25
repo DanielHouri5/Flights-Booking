@@ -4,30 +4,37 @@ import api from '../services/api.js';
 import FlightCard from '../components/FlightCard.jsx';
 import './FlightsList.css';
 
-function FlightsList({ searchParams }) {
+function FlightsList({ searchParams = null, flights: fixedFlights = null }) {
   console.log('search params:', searchParams);
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchFlights();
-  }, [searchParams]);
+useEffect(() => {
+  if (fixedFlights) {
+    setFlights(fixedFlights);
+    setLoading(false);
+    return;
+  }
+
+  fetchFlights();
+  }, [searchParams, fixedFlights]);
 
   const fetchFlights = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const query = new URLSearchParams(searchParams).toString();
-      const response = await api.get(`/flights/search-flights?${query}`);
-      setFlights(response.data);
-    } catch (err) {
-      setError('No flights found for your selection');
-      setFlights([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  setError(null);
+
+  try {
+    const query = new URLSearchParams(searchParams).toString();
+    const response = await api.get(`/flights/search-flights?${query}`);
+    setFlights(response.data);
+  } catch (err) {
+    setError('No flights found for your selection');
+    setFlights([]);
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading)
     return (
@@ -55,7 +62,7 @@ function FlightsList({ searchParams }) {
       <p style={{ textAlign: 'center', marginTop: '50px' }}>No flights found</p>
     );
 
-  const passengers = Number(searchParams.passengers || 1);
+const passengers = Number(searchParams?.passengers || 1);
 
   return (
     <div className="flights-list-wrapper">

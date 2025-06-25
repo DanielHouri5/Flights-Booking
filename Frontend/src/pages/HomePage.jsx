@@ -1,5 +1,5 @@
 // Frontend/src/pages/HomePage.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FlightsList from './FlightsList';
 import './HomePage.css';
 
@@ -13,7 +13,22 @@ function HomePage() {
   });
 
   const [showFlights, setShowFlights] = useState(false);
+  const [upcoming, setUpcoming] = useState([]);
+  const [loadingUpcoming, setLoadingUpcoming] = useState(true);
 
+  useEffect(() => {
+    const loadUpcoming = async () => {
+      try {
+        const res = await api.get('/flights/upcoming-month');
+        setUpcoming(res.data);
+      } catch (err) {
+        console.error('Error loading upcoming month flights', err);
+      } finally {
+        setLoadingUpcoming(false);
+      }
+    };
+    loadUpcoming();
+  }, []);
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,6 +94,19 @@ function HomePage() {
 
       <section className="featured-section">
         {showFlights && <FlightsList searchParams={searchParams} />}
+      </section>
+
+      {/* חלק טיסות החודש */}
+      <section className="upcoming-month-section">
+        <h2>Upcoming Flights This Month</h2>
+
+        {loadingUpcoming ? (
+          <p>Loading upcoming flights...</p>
+        ) : upcoming.length > 0 ? (
+          <FlightsList flights={upcoming} />
+        ) : (
+          <p>No upcoming flights this month.</p>
+        )}
       </section>
     </div>
   );

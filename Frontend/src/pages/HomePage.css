@@ -66,6 +66,19 @@
   margin-top: 10px;
 }
 
+.upcoming-month-section {
+  max-width: 900px;
+  margin: 2rem auto 4rem auto;
+  text-align: center;
+}
+
+.upcoming-month-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  color: #007bff;
+}
+
+
 
 /* =====================
    Responsive Tweaks
