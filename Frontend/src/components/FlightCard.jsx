@@ -1,17 +1,19 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ הוסף את זה
+import { useNavigate } from 'react-router-dom'; 
 import './FlightCard.css';
 
 function FlightCard({ flight }) {
-  const navigate = useNavigate(); // ✅ הוסף את זה
+  const navigate = useNavigate(); 
 
   const {
     company,
+    flight_id: flightId, 
     origin,
     destination,
     departure_date,
     arrival_date,
     price,
+    passengers = 1, // ברירת מחדל
   } = flight;
 
   const departure_time = new Date(departure_date).toLocaleTimeString([], {
@@ -27,7 +29,14 @@ function FlightCard({ flight }) {
   });
 
   const handleBookClick = () => {
-    navigate('/create-order', { state: { flight } }); // ✅ ניווט עם מידע
+    navigate('/create-order', {
+      state: {
+        flight: {
+          ...flight,
+          passengers, // ודא שזה עובר
+        },
+      },
+    });
   };
 
   return (
