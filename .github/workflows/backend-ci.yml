@@ -2,13 +2,13 @@ name: CI - Backend
 
 on:
   push:
-    branches: ['production']
+    branches: ['main', 'development', 'production']
     paths:
-      - '**/*'
+      - 'Backend/**'
   pull_request:
-    branches: ['production']
+    branches: ['main', 'development', 'production']
     paths:
-      - '**/*'
+      - 'Backend/**'
 
 jobs:
   build-and-test:
