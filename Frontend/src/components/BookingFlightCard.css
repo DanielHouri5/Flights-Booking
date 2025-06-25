@@ -1,161 +1,132 @@
 .booking-flight-card {
+  margin-top: 10px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-  padding: 16px 24px;
-  margin-bottom: 20px;
-  max-width: 900px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px 28px;
+  margin-bottom: 24px;
+  max-width: 1000px;
   width: 100%;
   transition: box-shadow 0.3s ease;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  gap: 20px;
   box-sizing: border-box;
 }
 
 .booking-flight-card:hover {
-  box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .booking-flight-card__logo img {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .booking-flight-card__info {
-  flex-grow: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  min-width: 0; 
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+  gap: 6px;
 }
 
 .booking-flight-card__company-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 10px;
-  min-width: 0; 
-}
-
-.booking-flight-card__company-name {
-  font-weight: 700;
-  font-size: 1.25rem;
-  color: #007bff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
 }
 
 .booking-flight-card__flight-number {
   font-size: 0.9rem;
-  color: #555;
-  margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;
+  color: #777;
+}
+
+.booking-flight-card__details {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  gap: 24px;
 }
 
 .booking-flight-card__time-city {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 0;
+  text-align: center;
+  max-width: 140px;
 }
 
 .booking-flight-card__departure-time,
 .booking-flight-card__arrival-time {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 500;
   color: #007bff;
-  white-space: normal;
-  overflow-wrap: break-word;
-  max-width: 120px;
-  text-align: center;
 }
 
 .booking-flight-card__departure-city,
 .booking-flight-card__arrival-city {
   font-size: 1rem;
-  color: #555;
+  font-weight: 400;
+  color: #444;
   margin-top: 4px;
-  white-space: normal;
-  max-width: 120px;
-  text-align: center;
 }
 
 .booking-flight-card__arrow {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #888;
   user-select: none;
 }
 
 .booking-flight-card__price-section {
-  width: 140px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: right;
+  min-width: 130px;
   position: relative;
-  min-width: 0;
+  padding-left: 20px; /* מרווח בין הקו למחיר */
 }
 
 .booking-flight-card__separator {
   position: absolute;
-  left: -10px;
+  left: 0;
   top: 10%;
-  bottom: 10%;
-  width: 1.5px;
-  background-color: #ddd;
-  border-radius: 2px;
+  height: 80%;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 1px;
 }
 
 .booking-flight-card__price {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: bold;
   color: #007bff;
-  margin-bottom: 12px;
-  z-index: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 140px;
+  text-align: left;
 }
 
 .booking-flight-card__per-person {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: #999;
-  text-align: left;
-  margin-top: 2px;
 }
 
-@media (max-width: 600px) {
+/* Mobile Responsive */
+@media (max-width: 700px) {
   .booking-flight-card {
     flex-direction: column;
     align-items: flex-start;
-    max-width: 100%;
+    gap: 16px;
   }
-  .booking-flight-card__price-section {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    position: relative;
-    margin-top: 15px;
-  }
-  .booking-flight-card__separator {
-  position: absolute;
-  left: -10px;
-  top: 10%;
-  bottom: 10%;
-  width: 1.5px;
-  background-color: #ddd;
-  border-radius: 2px;
-}
 
+  .booking-flight-card__details {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .booking-flight-card__price-section {
+    align-self: flex-end;
+  }
 }
