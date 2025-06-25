@@ -9,7 +9,7 @@ function BookingFlightCard({ flight }) {
     departure_date,
     arrival_date,
     price,
-    flightNumber,
+    flight_id,
   } = flight;
 
   // Full readable date and time
@@ -34,26 +34,29 @@ function BookingFlightCard({ flight }) {
       </div>
 
       <div className="booking-flight-card__info">
-        <div className="booking-flight-card__company-info">
-          {flightNumber && (
-            <div className="booking-flight-card__flight-number">
-              Flight Number: {flightNumber}
-            </div>
-          )}
-        </div>
-
-        <div className="booking-flight-card__time-city">
-          <div className="booking-flight-card__departure-time">{departureDateTime}</div>
-          <div className="booking-flight-card__departure-city">{origin}</div>
-        </div>
-
-        <div className="booking-flight-card__arrow">→</div>
-
-        <div className="booking-flight-card__time-city">
-          <div className="booking-flight-card__arrival-time">{arrivalDateTime}</div>
-          <div className="booking-flight-card__arrival-city">{destination}</div>
-        </div>
+  <div className="booking-flight-card__company-info">
+    {flight_id && (
+      <div className="booking-flight-card__flight-number">
+        Flight Number: {flight_id}
       </div>
+    )}
+  </div>
+
+  <div className="booking-flight-card__details">
+    <div className="booking-flight-card__time-city">
+      <div className="booking-flight-card__departure-time">{departureDateTime}</div>
+      <div className="booking-flight-card__departure-city">{origin}</div>
+    </div>
+
+    <div className="booking-flight-card__arrow">→</div>
+
+    <div className="booking-flight-card__time-city">
+      <div className="booking-flight-card__arrival-time">{arrivalDateTime}</div>
+      <div className="booking-flight-card__arrival-city">{destination}</div>
+    </div>
+  </div>
+</div>
+
 
       <div className="booking-flight-card__price-section">
         <div className="booking-flight-card__separator"></div>
