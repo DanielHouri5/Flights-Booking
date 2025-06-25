@@ -11,11 +11,12 @@ function CreateOrderPage() {
 
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [passengers, setPassengers] = useState(flight ? 1 : 0);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [userId, setUserId] = useState('');
-  const [orderCompleted, setOrderCompleted] = useState(false); // <-- הוספתי כאן
+  const [orderCompleted, setOrderCompleted] = useState(false); 
+  const [passengers, setPassengers] = useState(flight?.passengers || 1);
+
 
   if (!flight) {
     return (
@@ -134,6 +135,7 @@ function CreateOrderPage() {
             Passengers:
             <select
               value={passengers}
+              
               onChange={(e) => setPassengers(Number(e.target.value))}
             >
               {[...Array(10).keys()].map((i) => (

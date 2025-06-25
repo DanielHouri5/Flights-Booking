@@ -32,7 +32,7 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
-  min-width: 0; /* חשוב לאפשר שהילדים יתכווצו */
+  min-width: 0; 
 }
 
 .booking-flight-card__company-info {
@@ -40,7 +40,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
-  min-width: 0; /* חשוב */
+  min-width: 0; 
 }
 
 .booking-flight-card__company-name {

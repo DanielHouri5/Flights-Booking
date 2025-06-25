@@ -12,7 +12,6 @@ function BookingFlightCard({ flight }) {
     flightNumber,
   } = flight;
 
-  // Full readable date and time
     const departureDateTime = new Date(departure_date).toLocaleString('en-US', {
     dateStyle: 'medium',
     timeStyle: 'short',

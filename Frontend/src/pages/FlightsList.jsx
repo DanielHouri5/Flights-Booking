@@ -55,11 +55,13 @@ function FlightsList({ searchParams }) {
       <p style={{ textAlign: 'center', marginTop: '50px' }}>No flights found</p>
     );
 
+  const passengers = Number(searchParams.passengers || 1);
+
   return (
     <div className="flights-list-wrapper">
       {flights.map((flight) => (
         <div key={flight.flight_id} className="flight-card-wrapper">
-          <FlightCard flight={flight} />
+          <FlightCard flight={{ ...flight, passengers }} />
         </div>
       ))}
     </div>
