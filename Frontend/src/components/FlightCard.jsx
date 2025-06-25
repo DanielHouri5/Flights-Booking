@@ -33,7 +33,7 @@ function FlightCard({ flight }) {
       state: {
         flight: {
           ...flight,
-          passengers, // ודא שזה עובר
+          passengers, 
         },
       },
     });

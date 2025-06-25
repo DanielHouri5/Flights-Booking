@@ -14,7 +14,7 @@ function CreateOrderPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [userId, setUserId] = useState('');
-  const [orderCompleted, setOrderCompleted] = useState(false); // <-- הוספתי כאן
+  const [orderCompleted, setOrderCompleted] = useState(false); 
   const [passengers, setPassengers] = useState(flight?.passengers || 1);
 
 
