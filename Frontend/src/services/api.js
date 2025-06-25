@@ -2,14 +2,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-<<<<<<< HEAD
-  // baseURL: 'http://localhost:8080',
-  baseURL: 'https://flights-backend-1085375047232.us-central1.run.app',
-  // baseURL: 'http://backend:8080',
-=======
-  //baseURL: 'http://localhost:8080',
-  baseURL: 'https://flights-backend-1085375047232.us-central1.run.app',
->>>>>>> a9328933beb3051fb694f4b2e99756e7217a6aaf
+  baseURL: 'http://localhost:8080',
+  // baseURL: 'https://flights-backend-1085375047232.us-central1.run.app',
 });
 
 api.interceptors.request.use(
