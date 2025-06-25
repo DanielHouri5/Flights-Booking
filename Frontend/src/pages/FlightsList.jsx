@@ -15,20 +15,19 @@ function FlightsList({ searchParams }) {
   }, [searchParams]);
 
   const fetchFlights = async () => {
-  setLoading(true);
-  setError(null);
-  try {
-    const query = new URLSearchParams(searchParams).toString();
-    const response = await api.get(`/flights/search-flights?${query}`);
-    setFlights(response.data);
-  } catch (err) {
-    
-    setError('No flights found for your selection');
-    setFlights([]);
-  } finally {
-    setLoading(false);
-  }
-};
+    setLoading(true);
+    setError(null);
+    try {
+      const query = new URLSearchParams(searchParams).toString();
+      const response = await api.get(`/flights/search-flights?${query}`);
+      setFlights(response.data);
+    } catch (err) {
+      setError('No flights found for your selection');
+      setFlights([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading)
     return (
@@ -38,19 +37,23 @@ function FlightsList({ searchParams }) {
     );
 
   if (error)
-  return (
-    <p style={{ 
-      color: '#3a8df3', 
-      textAlign: 'center', 
-      fontWeight: 'bold', 
-      fontSize: '18px' ,
-    }}>
-      {error}
-    </p>
-  );
+    return (
+      <p
+        style={{
+          color: '#3a8df3',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          fontSize: '18px',
+        }}
+      >
+        {error}
+      </p>
+    );
 
   if (flights.length === 0)
-    return <p style={{ textAlign: 'center', marginTop: '50px' }}>No flights found</p>;
+    return (
+      <p style={{ textAlign: 'center', marginTop: '50px' }}>No flights found</p>
+    );
 
   const passengers = Number(searchParams.passengers || 1);
 
