@@ -9,7 +9,7 @@ const { expect } = chai;
 let server;
 
 describe('Flight Test', () => {
-  const flightId = 130;
+  const flightId = 342;
 
   before(async function () {
     this.timeout(10000);

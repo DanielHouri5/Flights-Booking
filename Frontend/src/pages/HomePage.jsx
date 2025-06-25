@@ -17,7 +17,12 @@ function HomePage() {
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setSearchParams((prev) => ({ ...prev, [name]: value }));
+    const trimmedValue = typeof value === 'string' ? value.trim() : value;
+
+    setSearchParams((prev) => ({
+      ...prev,
+      [name]: trimmedValue,
+    }));
   };
 
   const handleSearchClick = () => {
