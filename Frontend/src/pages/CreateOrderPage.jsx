@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BookingFlightCard from '../components/BookingFlightCard';
+import api from '../services/api';  // ייבוא api
 import './CreateOrderPage.css';
 
 function CreateOrderPage() {
@@ -16,7 +17,7 @@ function CreateOrderPage() {
   const [success, setSuccess] = useState('');
   const [orderCompleted, setOrderCompleted] = useState(false);
 
-  const passengers = flight?.passengers || 1; // Default to 1 if not provided
+  const passengers = flight?.passengers || 1;
 
   if (!flight) {
     return (
@@ -48,30 +49,17 @@ function CreateOrderPage() {
       flight_id: flight.flight_id,
       order_date: new Date().toISOString(),
       price: flight.price * passengers,
-      num_passengers: String(passengers), // 👈 כניסה כטקסט
+      num_passengers: String(passengers),
     };
 
     try {
-      const response = await fetch(
-        'http://localhost:8080/orders/create-order',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(orderData),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create order');
-      }
+      const response = await api.post(`/orders/create-order`, orderData);
 
       setSuccess('Order created successfully');
       setError('');
       setOrderCompleted(true);
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.error || err.message || 'Failed to create order');
       setSuccess('');
     }
   };
