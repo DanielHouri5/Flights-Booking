@@ -68,7 +68,7 @@ function CreateOrderPage() {
     return (
       <div className="create-order">
         <div className="order-container success-completed">
-          <h2>Order successfully placed!</h2>
+          <h2 data-testid="order-success-title">Order successfully placed!</h2>
           <p>You can view it in My Orders.</p>
         </div>
       </div>

@@ -45,14 +45,14 @@ function BookingFlightCard({ flight }) {
   <div className="booking-flight-card__details">
     <div className="booking-flight-card__time-city">
       <div className="booking-flight-card__departure-time">{departureDateTime}</div>
-      <div className="booking-flight-card__departure-city">{origin}</div>
+      <div className="booking-flight-card__departure-city" data-testid="departure-city">{origin}</div>
     </div>
 
     <div className="booking-flight-card__arrow">→</div>
 
     <div className="booking-flight-card__time-city">
       <div className="booking-flight-card__arrival-time">{arrivalDateTime}</div>
-      <div className="booking-flight-card__arrival-city">{destination}</div>
+      <div className="booking-flight-card__arrival-city" data-testid="arrival-city">{destination}</div>
     </div>
   </div>
 </div>
@@ -60,7 +60,7 @@ function BookingFlightCard({ flight }) {
 
       <div className="booking-flight-card__price-section">
         <div className="booking-flight-card__separator"></div>
-        <div className="booking-flight-card__price">
+        <div className="booking-flight-card__price" data-testid="flight-price">
           ${Number(price).toFixed(2)}
           <div className="booking-flight-card__per-person">per person</div>
         </div>

@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
 import api from '../services/api';
 
@@ -21,17 +20,15 @@ test('navigates to create order with flight state when clicking Book Flight', as
 
   api.get.mockResolvedValueOnce({ data: [mockFlight] });
 
-  render(
-    <MemoryRouter initialEntries={['/']}>
-      <App />
-    </MemoryRouter>
-  );
+  render(<App />); // ללא עטיפה נוספת של Router
 
-  const bookBtn = await screen.findByText(/Book Flight/i);
+  // חכה לכפתור ואז לחץ
+  const bookBtn = await screen.findByTestId('book-button');
   fireEvent.click(bookBtn);
 
-  expect(await screen.findByText(/Create Your Order/i)).toBeInTheDocument();
-  expect(screen.getByText(/Rome/)).toBeInTheDocument();
-  expect(screen.getByText(/Berlin/)).toBeInTheDocument();
-  expect(screen.getByText(/\$250\.00/)).toBeInTheDocument();
+  // ודא שהועבר לדף עם פרטי הטיסה
+  expect(await screen.findByText(/Book your flight/i)).toBeInTheDocument();
+  expect(screen.getByTestId('departure-city')).toHaveTextContent('Rome');
+  expect(screen.getByTestId('arrival-city')).toHaveTextContent('Berlin');
+  expect(screen.getByTestId('flight-price')).toHaveTextContent('$250.00');
 });

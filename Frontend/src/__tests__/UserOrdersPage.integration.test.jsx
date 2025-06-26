@@ -9,6 +9,7 @@ jest.mock('../services/api');
 
 describe('UserOrdersPage Integration', () => {
   test('displays user orders from API', async () => {
+    // מוק להזמנות
     api.get.mockResolvedValueOnce({
       data: [
         {
@@ -22,6 +23,20 @@ describe('UserOrdersPage Integration', () => {
           num_passengers: 2,
         },
       ],
+    });
+
+    // מוק לטיסה עבור OrderCard
+    api.get.mockResolvedValueOnce({
+      data: {
+        flight_id: 101,
+        origin: 'London',
+        destination: 'Paris',
+        departure_date: new Date().toISOString(),
+        arrival_date: new Date(Date.now() + 2 * 3600000).toISOString(),
+        company: 'TestAir',
+        price: 250,
+        passengers: 2,
+      },
     });
 
     render(

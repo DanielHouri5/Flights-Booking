@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import CreateOrderPage from '../pages/CreateOrderPage';
+import api from '../services/api';
 
 // mock ל־useLocation ו־useNavigate
 jest.mock('react-router-dom', () => ({
@@ -21,11 +22,9 @@ jest.mock('../components/BookingFlightCard', () => () => (
   <div>Mocked BookingFlightCard</div>
 ));
 
-describe('CreateOrderPage', () => {
-  beforeEach(() => {
-    global.fetch = jest.fn();
-  });
+jest.mock('../services/api');
 
+describe('CreateOrderPage', () => {
   test('renders flight data and form inputs', () => {
     render(<CreateOrderPage />);
     expect(screen.getByText(/Book your flight/i)).toBeInTheDocument();
@@ -34,9 +33,9 @@ describe('CreateOrderPage', () => {
     expect(screen.getByPlaceholderText(/Enter your ID number/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Enter your email/i)).toBeInTheDocument();
     expect(
-        screen.getByText((content, element) =>
-            element.textContent === 'Total price: $200.00'
-        )
+      screen.getByText((content, element) =>
+        element.textContent === 'Total price: $200.00'
+      )
     ).toBeInTheDocument();
   });
 
@@ -47,9 +46,8 @@ describe('CreateOrderPage', () => {
   });
 
   test('submits form successfully', async () => {
-    fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ message: 'Order created successfully' }),
+    api.post.mockResolvedValueOnce({
+      data: { message: 'Order created successfully' },
     });
 
     render(<CreateOrderPage />);
@@ -66,14 +64,13 @@ describe('CreateOrderPage', () => {
     fireEvent.click(screen.getByText(/Confirm Booking/i));
 
     await waitFor(() =>
-      expect(screen.getByText(/Order successfully placed!/i)).toBeInTheDocument()
+      expect(screen.getByTestId('order-success-title')).toBeInTheDocument()
     );
   });
 
   test('handles error response from server', async () => {
-    fetch.mockResolvedValueOnce({
-      ok: false,
-      json: async () => ({ error: 'Server error' }),
+    api.post.mockRejectedValueOnce({
+      response: { data: { error: 'Server error' } },
     });
 
     render(<CreateOrderPage />);
