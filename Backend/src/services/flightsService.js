@@ -38,8 +38,12 @@ export const flightsService = {
 
     const flights = await Flights.findAll({
       where: {
-        origin,
-        destination,
+        origin: {
+          [Op.iLike]: origin,          // כאן - חיפוש case-insensitive ל-origin
+        },
+        destination: {
+          [Op.iLike]: destination,     // וכאן ל-destination
+        },
         departure_date: {
           [Op.gte]: departureDate,
         },
