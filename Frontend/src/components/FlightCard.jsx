@@ -54,18 +54,18 @@ function FlightCard({ flight }) {
       <div className="flight-card__info">
         <div className="flight-card__time-city">
           <div className="flight-card__departure-time">{departure_time}</div>
-          <div className="flight-card__departure-city">{origin}</div>
+          <div className="flight-card__departure-city" data-testid="departure-city">{origin}</div>
         </div>
 
         <div className="flight-card__arrow">→</div>
 
         <div className="flight-card__time-city">
           <div className="flight-card__arrival-time">{arrival_time}</div>
-          <div className="flight-card__arrival-city">{destination}</div>
+          <div className="flight-card__arrival-city" data-testid="arrival-city">{destination}</div>
         </div>
       </div>
 
-      <div className="flight-card__price-section">
+      <div className="flight-card__price-section" data-testid="flight-price">
         <div className="flight-card__separator"></div>
         <div className="flight-card__price">
           ${Number(price).toFixed(2)}
