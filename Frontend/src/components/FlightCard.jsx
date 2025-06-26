@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './BookingFlightCard.css'; // אותו CSS של הכרטיס הקיים
+import './FlightCard.css'; 
 
 function FlightCard({ flight }) {
   const navigate = useNavigate();
