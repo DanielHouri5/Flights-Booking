@@ -1,9 +1,8 @@
 // seedFlights.js
 import { Sequelize, DataTypes } from 'sequelize';
 
-const sequelize = new Sequelize('DB_NAME', 'USERNAME', 'PASSWORD', {
-  host: 'DB_HOST',
-  dialect: 'postgres', // או mysql/sqlite לפי הצורך שלך
+const sequelize = new Sequelize('postgres://postgres:pass@35.232.83.157:5432/flight_booking',{
+  dialect: 'postgres', 
   logging: false,
 });
 
@@ -52,7 +51,7 @@ const Flights = sequelize.define(
 
 const cities = [
   'Tel Aviv', 'New York', 'Paris', 'London', 'Rome', 'Berlin',
-  'Athens', 'Madrid', 'Dubai', 'Istanbul', 'Bangkok', 'Tokyo'
+  'Athens', 'Madrid', 'Albania', 'Dubai', 'Istanbul', 'Bangkok', 'Tokyo'
 ];
 
 const companies = ['El Al', 'Delta', 'United', 'Air France', 'Lufthansa', 'Turkish Airlines'];
