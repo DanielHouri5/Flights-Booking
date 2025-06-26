@@ -41,7 +41,6 @@ function HomePage() {
     setShowFlights(true);
   };
 
-  // פונקציה לחלוקת מערך לשני חצאים
   const splitArrayInHalf = (arr) => {
     const mid = Math.ceil(arr.length / 2);
     return [arr.slice(0, mid), arr.slice(mid)];
