@@ -62,7 +62,6 @@
   max-width: 140px;
 }
 
-/* תאריך */
 .flight-card__departure-date,
 .flight-card__arrival-date {
   font-size: 1.1rem;
@@ -71,7 +70,6 @@
   margin-bottom: 2px;
 }
 
-/* שעה */
 .flight-card__departure-time,
 .flight-card__arrival-time {
   font-size: 1.1rem;
@@ -80,7 +78,6 @@
   margin-bottom: 4px;
 }
 
-/* עיר */
 .flight-card__departure-city,
 .flight-card__arrival-city {
   font-size: 1rem;
@@ -88,7 +85,6 @@
   color: #444;
 }
 
-/* חץ */
 .flight-card__arrow {
   font-size: 1.8rem;
   color: #888;
