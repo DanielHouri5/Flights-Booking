@@ -29,17 +29,23 @@ function HomePage() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const trimmedValue = typeof value === 'string' ? value.trim() : value;
 
     setSearchParams((prev) => ({
       ...prev,
-      [name]: trimmedValue,
+      [name]: value,
     }));
   };
 
   const handleSearchClick = () => {
-    setShowFlights(true);
+  const cleanedParams = {
+    ...searchParams,
+    origin: searchParams.origin.trim(),
+    destination: searchParams.destination.trim(),
   };
+
+  setSearchParams(cleanedParams);
+  setShowFlights(true);
+};
 
   const splitArrayInHalf = (arr) => {
     const mid = Math.ceil(arr.length / 2);
