@@ -102,7 +102,6 @@
   background: rgba(0, 123, 255, 0.2);
 }
 
-/* עיצוב שתי העמודות במצב "Upcoming Flights" */
 .flights-double-column {
   display: flex;
   gap: 2rem;
@@ -112,7 +111,6 @@
   max-width: 1600px;
 }
 
-/* כל עמודה בתוך שתי העמודות */
 .flights-column,
 .flights-single-column {
   flex: 1;
@@ -133,7 +131,6 @@
   display: none;
 }
 
-/* עיצוב לעמודה יחידה במצב חיפוש */
 .flights-single-column {
   width: 100%;
   max-width: 700px;
