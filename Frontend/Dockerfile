@@ -13,6 +13,9 @@ RUN npm install
 # Copy the rest of the application source code to the container
 COPY . .
 
+ARG VITE_SERVICE_URL
+ENV VITE_SERVICE_URL=$VITE_SERVICE_URL
+
 # Build the React app for production; output is in the /app/dist directory
 RUN npm run build
 

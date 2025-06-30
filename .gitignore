@@ -44,3 +44,7 @@ docker-compose.override.yml
 # npm cache
 .npm/
 .node_repl_history
+
+# Cypress output
+Frontend/cypress/videos/
+Frontend/cypress/screenshots/
