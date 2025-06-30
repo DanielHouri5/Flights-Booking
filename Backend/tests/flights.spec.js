@@ -32,7 +32,7 @@ describe('Flight Test', () => {
     const searchParams = {
       origin: 'Paris',
       destination: 'Venice',
-      departure_date: '2025-07-10',
+      departure_date: '2025-07-01',
       passengers: '1',
     };
 
