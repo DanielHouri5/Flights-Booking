@@ -49,6 +49,7 @@ const arrivalTime = new Date(arrival_date).toLocaleTimeString([], {
           alt={`${company} logo`}
           onError={(e) => (e.target.style.display = 'none')}
         />
+       <div className="flight-card__company-name">{company}</div>
       </div>
 
       <div className="flight-card__info">
@@ -81,7 +82,7 @@ const arrivalTime = new Date(arrival_date).toLocaleTimeString([], {
       <div className="flight-card__price-section">
         <div className="flight-card__separator"></div>
         <div className="flight-card__price" data-testid="flight-price">
-          ${Number(price).toFixed(2)}
+          ${Number(price)}
           <div className="flight-card__per-person">per person</div>
         </div>
         <button

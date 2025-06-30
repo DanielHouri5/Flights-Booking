@@ -39,6 +39,7 @@
   font-size: 1rem;
   color: #333;
   font-weight: 500;
+  white-space: pre-line; 
 }
 
 .booking-flight-card__flight-number {
@@ -123,6 +124,29 @@
   color: #999;
 }
 
+.booking-flight-card__company-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  margin-top: 6px;
+  white-space: pre-line;
+}
+
+/* מדיה — בטלפונים, נזיז את שם החברה לימין הלוגו */
+@media (max-width: 700px) {
+  .booking-flight-card__logo {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .booking-flight-card__company-name {
+    margin-top: 0;
+    margin-left: 10px;
+    text-align: left;
+  }
+}
+
 /* Responsive */
 @media (max-width: 700px) {
   .booking-flight-card {
@@ -147,6 +171,12 @@
     align-self: flex-start;
   }
 
+    .booking-flight-card__company-name {
+    margin-top: 0;
+    margin-left: 10px;
+    text-align: left;
+  }
+
   .booking-flight-card__logo img {
     width: 40px;
     height: 40px;
@@ -155,7 +185,7 @@
   }
 
   .booking-flight-card__flight-number {
-    font-size: 0.8rem;
+    font-size: 0.65rem;
     color: #555;
   }
 
