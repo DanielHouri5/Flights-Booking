@@ -9,7 +9,6 @@ function FlightsList({ searchParams, flights: initialFlights }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // אם קיבלנו flights מראש - לא מבצעים fetch
     if (initialFlights) {
       setFlights(initialFlights);
       setLoading(false);

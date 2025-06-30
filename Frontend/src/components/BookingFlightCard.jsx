@@ -12,16 +12,23 @@ function BookingFlightCard({ flight }) {
     flight_id,
   } = flight;
 
-  // Full readable date and time
-    const departureDateTime = new Date(departure_date).toLocaleString('en-US', {
+  const departureDate = new Date(departure_date).toLocaleDateString('en-US', {
     dateStyle: 'medium',
-    timeStyle: 'short',
-    });
+  });
+  const departureTime = new Date(departure_date).toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
 
-    const arrivalDateTime = new Date(arrival_date).toLocaleString('en-US', {
+  const arrivalDate = new Date(arrival_date).toLocaleDateString('en-US', {
     dateStyle: 'medium',
-    timeStyle: 'short',
-    });
+  });
+  const arrivalTime = new Date(arrival_date).toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
 
   return (
     <div className="booking-flight-card">
@@ -34,29 +41,30 @@ function BookingFlightCard({ flight }) {
       </div>
 
       <div className="booking-flight-card__info">
-  <div className="booking-flight-card__company-info">
-    {flight_id && (
-      <div className="booking-flight-card__flight-number">
-        Flight Number: {flight_id}
+        <div className="booking-flight-card__company-info">
+          {flight_id && (
+            <div className="booking-flight-card__flight-number">
+              Flight Number: {flight_id}
+            </div>
+          )}
+        </div>
+
+        <div className="booking-flight-card__details">
+          <div className="booking-flight-card__time-city">
+            <div className="booking-flight-card__departure-date">{departureDate}</div>
+            <div className="booking-flight-card__departure-time">{departureTime}</div>
+            <div className="booking-flight-card__departure-city" data-testid="departure-city">{origin}</div>
+          </div>
+
+          <div className="booking-flight-card__arrow">→</div>
+
+          <div className="booking-flight-card__time-city">
+            <div className="booking-flight-card__arrival-date">{arrivalDate}</div>
+            <div className="booking-flight-card__arrival-time">{arrivalTime}</div>
+            <div className="booking-flight-card__arrival-city" data-testid="arrival-city">{destination}</div>
+          </div>
+        </div>
       </div>
-    )}
-  </div>
-
-  <div className="booking-flight-card__details">
-    <div className="booking-flight-card__time-city">
-      <div className="booking-flight-card__departure-time">{departureDateTime}</div>
-      <div className="booking-flight-card__departure-city" data-testid="departure-city">{origin}</div>
-    </div>
-
-    <div className="booking-flight-card__arrow">→</div>
-
-    <div className="booking-flight-card__time-city">
-      <div className="booking-flight-card__arrival-time">{arrivalDateTime}</div>
-      <div className="booking-flight-card__arrival-city" data-testid="arrival-city">{destination}</div>
-    </div>
-  </div>
-</div>
-
 
       <div className="booking-flight-card__price-section">
         <div className="booking-flight-card__separator"></div>

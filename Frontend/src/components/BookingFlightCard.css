@@ -62,11 +62,20 @@
   max-width: 140px;
 }
 
-.booking-flight-card__departure-time,
-.booking-flight-card__arrival-time {
-  font-size: 0.92rem;
+.booking-flight-card__departure-date,
+.booking-flight-card__arrival-date {
+  font-size: 0.9rem;
   font-weight: 500;
   color: #007bff;
+  margin-bottom: 2px;
+}
+
+.booking-flight-card__departure-time,
+.booking-flight-card__arrival-time {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #007bff;
+  margin-bottom: 4px;
 }
 
 .booking-flight-card__departure-city,
@@ -74,7 +83,6 @@
   font-size: 1rem;
   font-weight: 400;
   color: #444;
-  margin-top: 4px;
 }
 
 .booking-flight-card__arrow {
@@ -87,7 +95,10 @@
   text-align: right;
   min-width: 130px;
   position: relative;
-  padding-left: 20px; /* מרווח בין הקו למחיר */
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .booking-flight-card__separator {
@@ -112,21 +123,108 @@
   color: #999;
 }
 
-/* Mobile Responsive */
+/* Responsive */
 @media (max-width: 700px) {
   .booking-flight-card {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    background: white;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    box-sizing: border-box;
+    gap: 0px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .booking-flight-card__logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    align-self: flex-start;
+  }
+
+  .booking-flight-card__logo img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .booking-flight-card__flight-number {
+    font-size: 0.8rem;
+    color: #555;
   }
 
   .booking-flight-card__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .booking-flight-card__time-city {
+    display: flex;
     flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
+    align-items: center;
+    flex: 1;
+  }
+
+  .booking-flight-card__departure-date,
+  .booking-flight-card__arrival-date {
+    font-size: 0.75rem;
+    color: #777;
+  }
+
+  .booking-flight-card__departure-time,
+  .booking-flight-card__arrival-time {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .booking-flight-card__departure-city,
+  .booking-flight-card__arrival-city {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+  }
+
+  .booking-flight-card__arrow {
+    font-size: 1.5rem;
+    color: #888;
+    flex-shrink: 0;
+    padding: 0 8px;
   }
 
   .booking-flight-card__price-section {
-    align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    padding-top: 8px;
+  }
+
+  .booking-flight-card__price {
+    font-size: 1.1rem;
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .booking-flight-card__per-person {
+    font-size: 0.75rem;
+    color: #888;
+  }
+
+  .booking-flight-card__separator {
+    display: none;
   }
 }
