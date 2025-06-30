@@ -46,5 +46,5 @@ docker-compose.override.yml
 .node_repl_history
 
 # Cypress output
-cypress/videos/
-cypress/screenshots/
+Frontend/cypress/videos/
+Frontend/cypress/screenshots/
