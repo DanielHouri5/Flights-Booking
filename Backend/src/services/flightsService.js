@@ -18,40 +18,34 @@ export const flightsService = {
     }
   },
 
-async searchFlights({ origin, destination, departure_date, passengers }) {
+  async searchFlights({ origin, destination, departure_date, passengers }) {
   try {
+    // Validation and parsing
     if (!origin || !destination || !departure_date || !passengers) {
       throw new Error('Missing required query parameters');
     }
 
     const departureDate = new Date(departure_date);
+    const passengerCount = parseInt(passengers);
 
     if (isNaN(departureDate.getTime())) {
       throw new Error('Invalid date format');
     }
 
-    const passengerCount = parseInt(passengers);
     if (isNaN(passengerCount) || passengerCount <= 0) {
       throw new Error('Invalid number of passengers');
     }
 
-    const startOfDay = new Date(departureDate);
-    startOfDay.setHours(0, 0, 0, 0);
-
-    const endOfDay = new Date(departureDate);
-    endOfDay.setHours(23, 59, 59, 999);
-
     const flights = await Flights.findAll({
       where: {
         origin: {
-          [Op.iLike]: origin,
+          [Op.iLike]: origin,          // כאן - חיפוש case-insensitive ל-origin
         },
         destination: {
-          [Op.iLike]: destination,
+          [Op.iLike]: destination,     // וכאן ל-destination
         },
         departure_date: {
-          [Op.gte]: startOfDay,
-          [Op.lte]: endOfDay,
+          [Op.gte]: departureDate,
         },
         seats_available: {
           [Op.gte]: passengerCount,
