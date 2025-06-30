@@ -38,10 +38,10 @@ jobs:
           cd Frontend
           npm run lint
 
-      # - name: Run Tests
-      #   run: |
-      #     cd Frontend
-      #     npm run test
+      - name: Run Tests
+        run: |
+          cd Frontend
+          npm run test
 
   deploy-to-cloud-run:
     needs: build-and-test
