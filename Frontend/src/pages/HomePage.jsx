@@ -1,10 +1,9 @@
-// Frontend/src/pages/HomePage.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FlightsList from './FlightsList';
 import './HomePage.css';
+import api from '../services/api.js';
 
 function HomePage() {
-  
   const [searchParams, setSearchParams] = useState({
     origin: '',
     destination: '',
@@ -13,36 +12,47 @@ function HomePage() {
   });
 
   const [showFlights, setShowFlights] = useState(false);
-  const [upcoming, setUpcoming] = useState([]);
-  const [loadingUpcoming, setLoadingUpcoming] = useState(true);
+  const [nearestFlights, setNearestFlights] = useState([]);
 
   useEffect(() => {
-    const loadUpcoming = async () => {
+    const fetchNearestFlights = async () => {
       try {
-        const res = await api.get('/flights/upcoming-month');
-        setUpcoming(res.data);
+        const response = await api.get('/flights/nearest-flights');
+        setNearestFlights(response.data);
       } catch (err) {
-        console.error('Error loading upcoming month flights', err);
-      } finally {
-        setLoadingUpcoming(false);
+        console.error('Failed to load nearest flights:', err);
       }
     };
-    loadUpcoming();
+
+    fetchNearestFlights();
   }, []);
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const trimmedValue = typeof value === 'string' ? value.trim() : value;
 
     setSearchParams((prev) => ({
       ...prev,
-      [name]: trimmedValue,
+      [name]: value,
     }));
   };
 
   const handleSearchClick = () => {
-    setShowFlights(true);
+  const cleanedParams = {
+    ...searchParams,
+    origin: searchParams.origin.trim(),
+    destination: searchParams.destination.trim(),
   };
+
+  setSearchParams(cleanedParams);
+  setShowFlights(true);
+};
+
+  const splitArrayInHalf = (arr) => {
+    const mid = Math.ceil(arr.length / 2);
+    return [arr.slice(0, mid), arr.slice(mid)];
+  };
+
+  const [leftFlights, rightFlights] = splitArrayInHalf(nearestFlights);
 
   return (
     <div>
@@ -75,37 +85,39 @@ function HomePage() {
             value={searchParams.passengers}
             onChange={handleInputChange}
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
+            {[...Array(10)].map((_, i) => (
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
           </select>
           <div className="search-button">
-          <button onClick={handleSearchClick}>Search Flights</button>
-        </div>
+            <button onClick={handleSearchClick}>Search Flights</button>
+          </div>
         </div>
       </section>
 
       <section className="featured-section">
-        {showFlights && <FlightsList searchParams={searchParams} />}
-      </section>
-
-      {/* חלק טיסות החודש */}
-      <section className="upcoming-month-section">
-        <h2>Upcoming Flights This Month</h2>
-
-        {loadingUpcoming ? (
-          <p>Loading upcoming flights...</p>
-        ) : upcoming.length > 0 ? (
-          <FlightsList flights={upcoming} />
+        {showFlights ? (
+          <div className="flights-column flights-single-column">
+            <FlightsList searchParams={searchParams} />
+          </div>
         ) : (
-          <p>No upcoming flights this month.</p>
+          <>
+            <h2>Upcoming Flights</h2>
+            {nearestFlights.length > 0 ? (
+              <div className="flights-double-column">
+                <div className="flights-column">
+                  <FlightsList flights={leftFlights} />
+                </div>
+                <div className="flights-column">
+                  <FlightsList flights={rightFlights} />
+                </div>
+              </div>
+            ) : (
+              <p style={{ textAlign: 'center' }}>Loading nearest flights...</p>
+            )}
+          </>
         )}
       </section>
     </div>

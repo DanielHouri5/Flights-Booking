@@ -7,7 +7,7 @@ import {
   Link,
 } from 'react-router-dom';
 import HomePage from './pages/HomePage.jsx';
-import OrderSearchResultsPage from './pages/OrderSearchResultsPage.jsx';
+import UserOrdersPage from './pages/UserOrdersPage.jsx';
 import CreateOrderPage from './pages/CreateOrderPage.jsx';
 import './App.css';
 
@@ -112,7 +112,7 @@ function App() {
             <Route path="/create-order" element={<CreateOrderPage />} />
             <Route
               path="/orders/read-orders/:userId"
-              element={<OrderSearchResultsPage />}
+              element={<UserOrdersPage />}
             />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
@@ -126,7 +126,6 @@ function App() {
           </div>
         </footer>
 
-        {/* הצגת מודאל לחיפוש לפי ת"ז */}
         <SearchModal isOpen={searchModalOpen} onClose={closeSearchModal} />
       </div>
     </Router>

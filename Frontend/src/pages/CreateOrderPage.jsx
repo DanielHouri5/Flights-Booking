@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BookingFlightCard from '../components/BookingFlightCard';
+import api from '../services/api'; // ייבוא api
 import './CreateOrderPage.css';
 
 function CreateOrderPage() {
@@ -11,12 +12,12 @@ function CreateOrderPage() {
 
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [userId, setUserId] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [userId, setUserId] = useState('');
-  const [orderCompleted, setOrderCompleted] = useState(false); 
-  const [passengers, setPassengers] = useState(flight?.passengers || 1);
+  const [orderCompleted, setOrderCompleted] = useState(false);
 
+  const passengers = flight?.passengers || 1;
 
   if (!flight) {
     return (
@@ -53,30 +54,19 @@ function CreateOrderPage() {
       flight_id: flight.flight_id,
       order_date: new Date().toISOString(),
       price: flight.price * passengers,
-      num_passengers: passengers,
+      num_passengers: String(passengers),
     };
 
     try {
-      const response = await fetch(
-        'http://localhost:8080/orders/create-order',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(orderData),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create order');
-      }
+      const response = await api.post(`/orders/create-order`, orderData);
 
       setSuccess('Order created successfully');
       setError('');
       setOrderCompleted(true);
     } catch (err) {
-      setError(err.message);
+      setError(
+        err.response?.data?.error || err.message || 'Failed to create order'
+      );
       setSuccess('');
     }
   };
@@ -85,7 +75,7 @@ function CreateOrderPage() {
     return (
       <div className="create-order">
         <div className="order-container success-completed">
-          <h2>Order successfully placed!</h2>
+          <h2 data-testid="order-success-title">Order successfully placed!</h2>
           <p>You can view it in My Orders.</p>
         </div>
       </div>
@@ -96,6 +86,7 @@ function CreateOrderPage() {
     <div className="create-order">
       <div className="order-container">
         <h2>Book your flight</h2>
+
         <div key={flight.flight_id} className="flight-card-wrapper">
           <BookingFlightCard flight={flight} />
         </div>
@@ -132,19 +123,9 @@ function CreateOrderPage() {
           </label>
 
           <label>
-            Passengers:
-            <select
-              value={passengers}
-              
-              onChange={(e) => setPassengers(Number(e.target.value))}
-            >
-              {[...Array(10).keys()].map((i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1}
-                </option>
-              ))}
-            </select>
+            Passengers selected: <strong>{passengers}</strong>
           </label>
+
           {flight.price && passengers > 0 && (
             <div className="total-price">
               Total price:{' '}

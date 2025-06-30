@@ -38,8 +38,12 @@ export const flightsService = {
 
     const flights = await Flights.findAll({
       where: {
-        origin,
-        destination,
+        origin: {
+          [Op.iLike]: origin,          // כאן - חיפוש case-insensitive ל-origin
+        },
+        destination: {
+          [Op.iLike]: destination,     // וכאן ל-destination
+        },
         departure_date: {
           [Op.gte]: departureDate,
         },
@@ -58,5 +62,28 @@ export const flightsService = {
     console.error('Error searching flights:', err.message);
     throw new Error('Failed to search flights');
   }
-}
+},
+
+async fetchNearestFlights(startDate = new Date(), limit = 10) {
+    try {
+      const flights = await Flights.findAll({
+        where: {
+          departure_date: {
+            [Op.gte]: startDate,
+          },
+        },
+        order: [['departure_date', 'ASC']],
+        limit: limit,
+      });
+
+      if (!flights || flights.length === 0) {
+        throw new Error('No upcoming flights found');
+      }
+
+      return flights;
+    } catch (err) {
+      console.error('Error fetching nearest flights:', err.message);
+      throw new Error('Failed to fetch nearest flights');
+    }
+  },
 };

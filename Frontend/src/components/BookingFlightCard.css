@@ -1,5 +1,5 @@
 .booking-flight-card {
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -7,7 +7,7 @@
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px 28px;
-  margin-bottom: 24px;
+  margin-bottom: 5px;
   max-width: 1000px;
   width: 100%;
   transition: box-shadow 0.3s ease;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import OrderCard from '../components/OrderCard';
 import api from '../services/api.js';
-
+import './UserOrdersPage.css';
 
 function UserOrdersPage() {
   const { userId } = useParams(); 

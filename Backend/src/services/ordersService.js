@@ -37,7 +37,7 @@ export const ordersService = {
             flight_id,
             order_date,
             price,
-            passengers,
+            num_passengers: passengers,
           },
           { transaction: t }
         );
