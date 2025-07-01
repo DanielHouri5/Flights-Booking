@@ -7,7 +7,7 @@
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px 28px;
-  margin-bottom: 24px;
+  margin-bottom: 0px;
   max-width: 1000px;
   width: 100%;
   transition: box-shadow 0.3s ease;
@@ -85,11 +85,13 @@
   color: #444;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> development
-.flight-card__arrow {
+<<<<<<<
+  HEAD
+  <<<<<<<
+  HEAD
+  =======>>>>>>>development
+  =======>>>>>>>development
+  .flight-card__arrow {
   font-size: 1.8rem;
   color: #888;
   user-select: none;
@@ -146,26 +148,120 @@
 }
 
 /* Responsive */
+/* Mobile style inspired by Skyscanner */
+
 @media (max-width: 700px) {
   .flight-card {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    background: white;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    box-sizing: border-box;
+    gap: 0px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .flight-card__logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    align-self: flex-start;
+  }
+
+  .flight-card__logo img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .flight-card__flight-number {
+    display: none;
   }
 
   .flight-card__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+  }
+
+  .flight-card__time-city {
+    display: flex;
     flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
+    align-items: center;
+    flex: 1;
+  }
+
+  .flight-card__departure-time,
+  .flight-card__arrival-time {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .flight-card__departure-date,
+  .flight-card__arrival-date {
+    font-size: 0.75rem;
+    color: #777;
+  }
+
+  .flight-card__departure-city,
+  .flight-card__arrival-city {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+  }
+
+  .flight-card__arrow {
+    font-size: 1.5rem;
+    color: #888;
+    flex-shrink: 0;
+    padding: 0 8px;
   }
 
   .flight-card__price-section {
-    align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
+    margin-top: 7px;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .flight-card__price {
+    font-size: 1.1rem;
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .flight-card__per-person {
+    font-size: 0.75rem;
+    color: #888;
   }
 
   .flight-card__book-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
     width: auto;
+  }
+
+  .flight-card__book-btn:hover {
+    background-color: #0056b3;
   }
 
   .flight-card__separator {

@@ -6,6 +6,7 @@
   background: #ffffff;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   max-width: 700px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .order-card h2 {
@@ -13,21 +14,44 @@
   color: #0077cc;
 }
 
-.order-section, .flight-section {
+.order-section {
   margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap; 
 }
 
-.order-section h3,
-.flight-section h3 {
-  color: #444;
-  margin-bottom: 0.5rem;
-}
-
-ul {
+.order-section ul {
   list-style: none;
   padding: 0;
+  margin: 0;
+  flex-basis: 48%; 
+  min-width: 250px; 
 }
 
-ul li {
-  margin-bottom: 6px;
+.order-section ul li {
+  font-size: 1rem;
+  color: #333;
+}
+
+.order-section ul li strong {
+  color: #0077cc;
+  width: 100px;
+  display: inline-block;
+}
+
+@media (max-width: 700px) {
+  .order-section {
+    display: block; 
+    margin-top: 1rem;
+  }
+
+
+  .order-section ul {
+    flex-basis: auto;
+    min-width: auto;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
 }
