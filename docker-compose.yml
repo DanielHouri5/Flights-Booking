@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  database:
+  db:
     image: postgres:15
     restart: unless-stopped
     environment:
@@ -28,9 +28,9 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_URL: postgres://postgres:pass@db:5432/flight_booking
     depends_on:
-      database:
+      db:
         condition: service_healthy
     ports:
       - '8080:8080'
