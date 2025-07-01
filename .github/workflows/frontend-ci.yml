@@ -38,10 +38,17 @@ jobs:
           cd Frontend
           npm run lint
 
-      # - name: Run Tests
-      #   run: |
-      #     cd Frontend
-      #     npm run test
+      - name: Run Unit and Integration Tests
+        run: |
+          cd Frontend
+          npm run test
+
+      - name: Run Cypress E2E Tests
+        run: |
+          cd Frontend
+          npm run dev &
+          npx wait-on http://localhost:5173/
+          npm run e2e
 
   deploy-to-cloud-run:
     needs: build-and-test

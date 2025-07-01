@@ -7,12 +7,40 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 const cities = [
-  'Tel Aviv', 'New York', 'Paris', 'London', 'Rome', 'Berlin',
-  'Athens', 'Madrid', 'Albania', 'Dubai', 'Istanbul', 'Bangkok', 'Tokyo',
-  'Barcelona', 'Amsterdam', 'Moscow', 'San Francisco', 'Toronto',
-  'Los Angeles', 'Copenhagen', 'Lisbon', 'Venice', 'Prague',
-  'Cape Town', 'Singapore', 'Hong Kong', 'Buenos Aires', 'Vancouver',
-  'Rio de Janeiro', 'Delhi', 'Shanghai', 'Mexico City', 'Miami', 'Switzerland'
+  'Tel Aviv',
+  'New York',
+  'Paris',
+  'London',
+  'Rome',
+  'Berlin',
+  'Athens',
+  'Madrid',
+  'Albania',
+  'Dubai',
+  'Istanbul',
+  'Bangkok',
+  'Tokyo',
+  'Barcelona',
+  'Amsterdam',
+  'Moscow',
+  'San Francisco',
+  'Toronto',
+  'Los Angeles',
+  'Copenhagen',
+  'Lisbon',
+  'Venice',
+  'Prague',
+  'Cape Town',
+  'Singapore',
+  'Hong Kong',
+  'Buenos Aires',
+  'Vancouver',
+  'Rio de Janeiro',
+  'Delhi',
+  'Shanghai',
+  'Mexico City',
+  'Miami',
+  'Switzerland',
 ];
 
 function HomePage() {
@@ -85,7 +113,6 @@ function HomePage() {
         <h2>Find your perfect flight</h2>
         <p>Compare flights from hundreds of airlines worldwide</p>
         <div className="search-box">
-
           <Autocomplete
             freeSolo
             options={cities}
@@ -100,7 +127,6 @@ function HomePage() {
                 size="small"
                 label={null}
                 className="customTextField"
-
                 InputLabelProps={{ shrink: false }}
               />
             )}
@@ -134,6 +160,7 @@ function HomePage() {
 
           <select
             name="passengers"
+            data-testid="passengers"
             value={searchParams.passengers}
             onChange={handleInputChange}
           >

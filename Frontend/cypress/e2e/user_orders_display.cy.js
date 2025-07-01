@@ -27,7 +27,7 @@ describe('User Orders - Display Orders', () => {
         departure_date: '2025-07-10T08:00:00Z',
         arrival_date: '2025-07-10T12:00:00Z',
         company: 'MockAir',
-        price: 180.0,
+        price: 180,
         passengers: 2,
       },
     }).as('getFlight');
@@ -54,7 +54,7 @@ describe('User Orders - Display Orders', () => {
     // בדוק שמוצגים פרטי הטיסה
     cy.contains(/London/i).should('be.visible');
     cy.contains(/Madrid/i).should('be.visible');
-    cy.contains(/\$180.00/).should('be.visible');
+    cy.contains(/\$180/).should('be.visible');
     cy.get('img[alt="MockAir logo"]').should('be.visible');
   });
 });

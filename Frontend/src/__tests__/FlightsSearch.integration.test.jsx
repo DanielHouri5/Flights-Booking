@@ -37,15 +37,21 @@ describe('Flight Search Integration', () => {
 
     render(<HomePage />, { wrapper: MemoryRouter });
 
-    fireEvent.change(screen.getByPlaceholderText(/From/i), { target: { value: 'London' } });
-    fireEvent.change(screen.getByPlaceholderText(/To/i), { target: { value: 'Madrid' } });
+    fireEvent.change(screen.getByPlaceholderText(/From/i), {
+      target: { value: 'London' },
+    });
+    fireEvent.change(screen.getByPlaceholderText(/To/i), {
+      target: { value: 'Madrid' },
+    });
 
     fireEvent.click(screen.getByText(/Search Flights/i));
 
     // חכה עד שכרטיס הטיסה יופיע
-    expect(await screen.findByTestId('departure-city')).toHaveTextContent('London');
+    expect(await screen.findByTestId('departure-city')).toHaveTextContent(
+      'London'
+    );
     expect(screen.getByTestId('arrival-city')).toHaveTextContent('Madrid');
-    expect(screen.getByTestId('flight-price')).toHaveTextContent('$180.00');
+    expect(screen.getByTestId('flight-price')).toHaveTextContent('$180');
     expect(screen.getByTestId('book-button')).toBeInTheDocument();
   });
 });

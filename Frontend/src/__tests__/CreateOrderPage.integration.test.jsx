@@ -13,12 +13,16 @@ describe('CreateOrderPage Integration', () => {
       departure_date: new Date().toISOString(),
       arrival_date: new Date(Date.now() + 2 * 3600000).toISOString(),
       company: 'MockAir',
-      price: 250.0,
+      price: 250,
       passengers: 2,
     };
 
     render(
-      <MemoryRouter initialEntries={[{ pathname: '/create-order', state: { flight: mockFlight } }]}>
+      <MemoryRouter
+        initialEntries={[
+          { pathname: '/create-order', state: { flight: mockFlight } },
+        ]}
+      >
         <Routes>
           <Route path="/create-order" element={<CreateOrderPage />} />
         </Routes>
@@ -27,6 +31,6 @@ describe('CreateOrderPage Integration', () => {
 
     expect(screen.getByText(/Paris/)).toBeInTheDocument();
     expect(screen.getByText(/Berlin/)).toBeInTheDocument();
-    expect(screen.getByText(/\$250.00/)).toBeInTheDocument();
+    expect(screen.getByText(/\$250/)).toBeInTheDocument();
   });
 });

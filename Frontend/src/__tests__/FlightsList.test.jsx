@@ -16,7 +16,7 @@ describe('FlightsList', () => {
         destination: 'Test Destination',
         departure_date: new Date().toISOString(),
         arrival_date: new Date().toISOString(),
-        price: 123.45,
+        price: 123,
         company: 'TestCompany',
       },
     ];

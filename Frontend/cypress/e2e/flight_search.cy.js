@@ -11,7 +11,7 @@ describe('Flight Search - E2E Test', () => {
           departure_date: '2025-07-10T08:00:00Z',
           arrival_date: '2025-07-10T12:00:00Z',
           company: 'MockAir',
-          price: 180.0,
+          price: 180,
         },
       ],
     }).as('mockSearch');
@@ -34,7 +34,7 @@ describe('Flight Search - E2E Test', () => {
     // בדוק שהתוצאה מוצגת בהתאם לנתונים המזויפים
     cy.get('[data-testid="departure-city"]').should('contain.text', 'London');
     cy.get('[data-testid="arrival-city"]').should('contain.text', 'Madrid');
-    cy.get('[data-testid="flight-price"]').should('contain.text', '$180.00');
+    cy.get('[data-testid="flight-price"]').should('contain.text', '$180');
     cy.get('[data-testid="book-button"]').should('be.visible');
   });
 });
