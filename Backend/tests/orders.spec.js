@@ -1,25 +1,25 @@
-/* eslint-env mocha */
 import request from 'supertest';
-import chai from 'chai';
 import { app, startTestServer } from './testFlights.js';
 
-const { expect } = chai;
 let server;
+
+jest.setTimeout(10000); // חשוב: מחוץ ל־beforeAll
 
 describe('Order Test', () => {
   const userId = 99999;
   let createdOrder = null;
 
-  before(async function () {
-    this.timeout(10000);
+  beforeAll(async () => {
     server = await startTestServer();
   });
 
-  after(() => {
-    server?.close();
+  afterAll(async () => {
+    if (server) {
+      await new Promise((resolve) => server.close(resolve));
+    }
   });
 
-  it('should create an order', async () => {
+  test('should create an order', async () => {
     const orderData = {
       user_id: userId,
       user_name: 'Test User',
@@ -35,23 +35,25 @@ describe('Order Test', () => {
       .send(orderData)
       .expect(201);
 
-    expect(res.body).to.have.property('order');
-    expect(res.body.order).to.have.property('order_id');
-    expect(res.body.order.user_name).to.equal('Test User');
+    expect(res.body).toHaveProperty('order');
+    expect(res.body.order).toHaveProperty('order_id');
+    expect(res.body.order.user_name).toBe('Test User');
     createdOrder = res.body.order;
   });
 
-  it('should fetch orders for a user', async () => {
+  test('should fetch orders for a user', async () => {
     const res = await request(app)
       .get(`/orders/read-orders/${userId}`)
       .expect(200);
 
-    expect(res.body).to.be.an('array');
-    expect(res.body.length).to.be.greaterThan(0);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+
     const found = res.body.find(
       (order) => order.order_id === createdOrder.order_id
     );
-    expect(found).to.exist;
-    expect(found.user_email).to.equal('test@example.com');
+
+    expect(found).toBeDefined();
+    expect(found.user_email).toBe('test@example.com');
   });
 });

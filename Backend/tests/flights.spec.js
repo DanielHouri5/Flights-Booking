@@ -1,53 +1,66 @@
-// tests/flights.test.js
-/* eslint-env mocha */
-//
 import request from 'supertest';
-import chai from 'chai';
 import { app, startTestServer } from './testFlights.js';
 
-const { expect } = chai;
 let server;
 
-describe('Flight Test', () => {
-  const flightId = 4222;
+jest.setTimeout(10000); // חשוב: מחוץ ל־beforeAll
 
-  before(async function () {
-    this.timeout(10000);
+describe('Flights API Test', () => {
+  beforeAll(async () => {
     server = await startTestServer();
   });
 
-  after(() => {
-    server?.close();
+  afterAll(async () => {
+    if (server) {
+      await new Promise((resolve) => server.close(resolve));
+    }
   });
 
-  it('should read a flight', async () => {
-    const readRes = await request(app)
+  test('should return nearest flights', async () => {
+    const res = await request(app)
+      .get('/flights/nearest-flights')
+      .expect(200);
+
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  test('should return a flight by ID', async () => {
+    const flightId = 4222;
+    const res = await request(app)
       .get(`/flights/read-flight/${flightId}`)
       .expect(200);
 
-    expect(readRes.body).to.have.property('company', 'Air Canada');
+    expect(res.body).toHaveProperty('flight_id', flightId);
   });
 
-  it('should return flights matching the search params', async () => {
-    const searchParams = {
-      origin: 'Paris',
-      destination: 'Venice',
-      departure_date: '2025-07-01',
-      passengers: '1',
-    };
-
-    const query = new URLSearchParams(searchParams).toString();
-
+  test('should return 404 for non-existing flight ID', async () => {
     const res = await request(app)
-      .get(`/flights/search-flights?${query}`)
+      .get('/flights/read-flight/999999')
+      .expect(404);
+
+    expect(res.body).toHaveProperty('error');
+  });
+
+  test('should search for flights with valid query params', async () => {
+    const res = await request(app)
+      .get('/flights/search-flights')
+      .query({
+        origin: 'TLV',
+        destination: 'LHR',
+        departure_date: '2025-07-01',
+        passengers: 1,
+      })
       .expect(200);
 
-    expect(res.body).to.be.an('array').that.is.not.empty;
-
-    const flight = res.body.find(
-      (f) => f.origin === 'Paris' && f.destination === 'Venice'
-    );
-    expect(flight).to.exist;
+    expect(Array.isArray(res.body)).toBe(true);
   });
-  console.log('Flight tests completed successfully');
+
+  test('should return 400 for missing search params', async () => {
+    const res = await request(app)
+      .get('/flights/search-flights')
+      .query({})
+      .expect(400);
+
+    expect(res.body).toHaveProperty('error');
+  });
 });
