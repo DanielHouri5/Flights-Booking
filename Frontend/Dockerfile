@@ -1,5 +1,5 @@
 # Use Node.js 18 Alpine image as the build environment for building the React app
-FROM node:18
+FROM node:18 AS build
 
 # Set the working directory inside the container to /app
 WORKDIR /app
