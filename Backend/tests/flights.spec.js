@@ -25,7 +25,7 @@ describe('Flight Test', () => {
       .get(`/flights/read-flight/${flightId}`)
       .expect(200);
 
-    expect(readRes.body).to.have.property('company', '"Air Canada"');
+    expect(readRes.body).to.have.property('company', 'Air Canada');
   });
 
   it('should return flights matching the search params', async () => {
