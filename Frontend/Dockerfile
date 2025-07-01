@@ -32,6 +32,6 @@ COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 8080 so the container can receive traffic on this port
-EXPOSE 5173
+EXPOSE 8080
 
-CMD ["npm", "run", "dev"]
+CMD ["nginx", "-g", "daemon off;"]
