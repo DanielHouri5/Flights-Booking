@@ -3,6 +3,18 @@ import FlightsList from './FlightsList';
 import './HomePage.css';
 import api from '../services/api.js';
 
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+
+const cities = [
+  'Tel Aviv', 'New York', 'Paris', 'London', 'Rome', 'Berlin',
+  'Athens', 'Madrid', 'Albania', 'Dubai', 'Istanbul', 'Bangkok', 'Tokyo',
+  'Barcelona', 'Amsterdam', 'Moscow', 'San Francisco', 'Toronto',
+  'Los Angeles', 'Copenhagen', 'Lisbon', 'Venice', 'Prague',
+  'Cape Town', 'Singapore', 'Hong Kong', 'Buenos Aires', 'Vancouver',
+  'Rio de Janeiro', 'Delhi', 'Shanghai', 'Mexico City', 'Miami', 'Switzerland'
+];
+
 function HomePage() {
   const [searchParams, setSearchParams] = useState({
     origin: '',
@@ -27,9 +39,22 @@ function HomePage() {
     fetchNearestFlights();
   }, []);
 
+  const handleOriginChange = (event, newValue) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      origin: newValue || '',
+    }));
+  };
+
+  const handleDestinationChange = (event, newValue) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      destination: newValue || '',
+    }));
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setSearchParams((prev) => ({
       ...prev,
       [name]: value,
@@ -37,15 +62,15 @@ function HomePage() {
   };
 
   const handleSearchClick = () => {
-  const cleanedParams = {
-    ...searchParams,
-    origin: searchParams.origin.trim(),
-    destination: searchParams.destination.trim(),
-  };
+    const cleanedParams = {
+      ...searchParams,
+      origin: searchParams.origin.trim(),
+      destination: searchParams.destination.trim(),
+    };
 
-  setSearchParams(cleanedParams);
-  setShowFlights(true);
-};
+    setSearchParams(cleanedParams);
+    setShowFlights(true);
+  };
 
   const splitArrayInHalf = (arr) => {
     const mid = Math.ceil(arr.length / 2);
@@ -60,26 +85,53 @@ function HomePage() {
         <h2>Find your perfect flight</h2>
         <p>Compare flights from hundreds of airlines worldwide</p>
         <div className="search-box">
-          <input
-            type="text"
-            name="origin"
-            placeholder="From"
+
+          <Autocomplete
+            freeSolo
+            options={cities}
             value={searchParams.origin}
-            onChange={handleInputChange}
+            onChange={handleOriginChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                name="origin"
+                placeholder="From"
+                variant="outlined"
+                size="small"
+                label={null}
+                className="customTextField"
+
+                InputLabelProps={{ shrink: false }}
+              />
+            )}
           />
-          <input
-            type="text"
-            name="destination"
-            placeholder="To"
+
+          <Autocomplete
+            freeSolo
+            options={cities}
             value={searchParams.destination}
-            onChange={handleInputChange}
+            onChange={handleDestinationChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                name="destination"
+                placeholder="To"
+                variant="outlined"
+                size="small"
+                label={null}
+                className="customTextField"
+                InputLabelProps={{ shrink: false }}
+              />
+            )}
           />
+
           <input
             type="date"
             name="departure_date"
             value={searchParams.departure_date}
             onChange={handleInputChange}
           />
+
           <select
             name="passengers"
             value={searchParams.passengers}
@@ -91,6 +143,7 @@ function HomePage() {
               </option>
             ))}
           </select>
+
           <div className="search-button">
             <button onClick={handleSearchClick}>Search Flights</button>
           </div>

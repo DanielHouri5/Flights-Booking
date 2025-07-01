@@ -24,10 +24,10 @@ describe('Order Test', () => {
       user_id: userId,
       user_name: 'Test User',
       user_email: 'test@example.com',
-      flight_id: 342,
+      flight_id: 4222,
       order_date: new Date().toISOString(),
-      price: 123.45,
-      num_passengers: '2',
+      price: 258,
+      num_passengers: '1',
     };
 
     const res = await request(app)
