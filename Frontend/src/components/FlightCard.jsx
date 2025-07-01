@@ -54,7 +54,7 @@ const arrivalTime = new Date(arrival_date).toLocaleTimeString([], {
       <div className="booking-flight-card__info">
         <div className="booking-flight-card__company-info">
           {flight_id && (
-            <div className="booking-flight-card__flight-number">
+            <div className="booking-flight-card__flight-number" data-testid="flight-company">
               Flight Number: {flight_id}
             </div>
           )}
@@ -64,7 +64,7 @@ const arrivalTime = new Date(arrival_date).toLocaleTimeString([], {
           <div className="flight-card__time-city">
             <div className="flight-card__departure-date">{departureDate}</div>
             <div className="flight-card__departure-time">{departureTime}</div>
-            <div className="flight-card__departure-city">{origin}</div>
+            <div className="flight-card__departure-city" data-testid="departure-city">{origin}</div>
         </div>
 
         <div className="flight-card__arrow">→</div>
@@ -72,7 +72,7 @@ const arrivalTime = new Date(arrival_date).toLocaleTimeString([], {
       <div className="flight-card__time-city">
         <div className="flight-card__arrival-date">{arrivalDate}</div>
         <div className="flight-card__arrival-time">{arrivalTime}</div>
-        <div className="flight-card__arrival-city">{destination}</div>
+        <div className="flight-card__arrival-city" data-testid="arrival-city">{destination}</div>
       </div>
 
         </div>
@@ -80,13 +80,14 @@ const arrivalTime = new Date(arrival_date).toLocaleTimeString([], {
 
       <div className="booking-flight-card__price-section">
         <div className="booking-flight-card__separator"></div>
-        <div className="booking-flight-card__price">
+        <div className="booking-flight-card__price" data-testid="flight-price">
           ${Number(price).toFixed(2)}
           <div className="booking-flight-card__per-person">per person</div>
         </div>
         <button
           className="flight-card__book-btn"
           onClick={handleBookClick}
+          data-testid="book-button"
         >
           Book Flight
         </button>

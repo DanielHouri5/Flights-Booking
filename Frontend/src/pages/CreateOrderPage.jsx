@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BookingFlightCard from '../components/BookingFlightCard';
-import api from '../services/api';  // ייבוא api
+import api from '../services/api'; // ייבוא api
 import './CreateOrderPage.css';
 
 function CreateOrderPage() {
@@ -36,7 +36,12 @@ function CreateOrderPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!userName.trim() || !userEmail.trim() || passengers < 1 || !userId.trim()) {
+    if (
+      !userName.trim() ||
+      !userEmail.trim() ||
+      passengers < 1 ||
+      !userId.trim()
+    ) {
       setError('Please fill in all fields correctly.');
       setSuccess('');
       return;
@@ -59,7 +64,9 @@ function CreateOrderPage() {
       setError('');
       setOrderCompleted(true);
     } catch (err) {
-      setError(err.response?.data?.error || err.message || 'Failed to create order');
+      setError(
+        err.response?.data?.error || err.message || 'Failed to create order'
+      );
       setSuccess('');
     }
   };
@@ -68,7 +75,7 @@ function CreateOrderPage() {
     return (
       <div className="create-order">
         <div className="order-container success-completed">
-          <h2>Order successfully placed!</h2>
+          <h2 data-testid="order-success-title">Order successfully placed!</h2>
           <p>You can view it in My Orders.</p>
         </div>
       </div>
@@ -121,7 +128,8 @@ function CreateOrderPage() {
 
           {flight.price && passengers > 0 && (
             <div className="total-price">
-              Total price: <strong>${(flight.price * passengers).toFixed(2)}</strong>
+              Total price:{' '}
+              <strong>${(flight.price * passengers).toFixed(2)}</strong>
             </div>
           )}
 

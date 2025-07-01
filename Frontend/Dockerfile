@@ -1,5 +1,5 @@
 # Use Node.js 18 Alpine image as the build environment for building the React app
-FROM node:18-alpine AS build
+FROM node:18
 
 # Set the working directory inside the container to /app
 WORKDIR /app
@@ -32,7 +32,6 @@ COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 8080 so the container can receive traffic on this port
-EXPOSE 8080
+EXPOSE 5173
 
-# Run Nginx in the foreground so the container keeps running
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "dev"]

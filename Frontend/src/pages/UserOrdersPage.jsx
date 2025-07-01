@@ -6,7 +6,7 @@ import api from '../services/api.js';
 import './UserOrdersPage.css';
 
 function UserOrdersPage() {
-  const { userId } = useParams(); 
+  const { userId } = useParams();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,8 +19,7 @@ function UserOrdersPage() {
     setLoading(true);
     setError(null);
     try {
-      const query = new URLSearchParams(userId).toString();
-      const response = await api.get(`/orders/read-orders/${userId}`)
+      const response = await api.get(`/orders/read-orders/${userId}`);
       setOrders(response.data);
     } catch (err) {
       setError('No orders found for your id number');
@@ -30,38 +29,41 @@ function UserOrdersPage() {
     }
   };
 
-if (loading)
-  return (
-    <p style={{ textAlign: 'center', marginTop: '50px' }}>
-      Loading orders...
-    </p>
-  );
+  if (loading)
+    return (
+      <p style={{ textAlign: 'center', marginTop: '50px' }}>
+        Loading orders...
+      </p>
+    );
 
-if (error)
-  return (
-    <p style={{ 
-      color: '#3a8df3', 
-      textAlign: 'center', 
-      fontWeight: 'bold', 
-      fontSize: '18px',
-    }}>
-      {error}
-    </p>
-  );
+  if (error)
+    return (
+      <p
+        style={{
+          color: '#3a8df3',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          fontSize: '18px',
+        }}
+      >
+        {error}
+      </p>
+    );
 
-if (orders.length === 0)
-  return (
-    <p style={{ 
-      color: '#3a8df3', 
-      textAlign: 'center', 
-      fontWeight: 'bold', 
-      fontSize: '18px',
-      marginTop: '50px'
-    }}>
-      No orders found for this ID.
-    </p>
-  );
-
+  if (orders.length === 0)
+    return (
+      <p
+        style={{
+          color: '#3a8df3',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          fontSize: '18px',
+          marginTop: '50px',
+        }}
+      >
+        No orders found for this ID.
+      </p>
+    );
 
   return (
     <div className="orders-list-wrapper">

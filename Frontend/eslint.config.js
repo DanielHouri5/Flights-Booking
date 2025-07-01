@@ -14,6 +14,8 @@ export default [
         ...globals.browser,
         ...globals.node,
         ...globals.jest,
+        cy: 'readonly',
+        Cypress: 'readonly',
       },
       parserOptions: {
         ecmaVersion: 'latest',
