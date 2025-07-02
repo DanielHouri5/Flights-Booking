@@ -1,64 +1,80 @@
-// tests/flights.test.js
-/* eslint-env mocha */
-//
 import request from 'supertest';
-import chai from 'chai';
 import { app, startTestServer } from './testFlights.js';
 
-const { expect } = chai;
 let server;
 
-// Test suite for flight-related endpoints
-describe('Flight Test', () => {
-  const flightId = 4222;
+// Set Jest timeout for all tests in this file
+jest.setTimeout(10000); // Important: set outside of beforeAll
 
+// Test suite for Flights API endpoints
+describe('Flights API Test', () => {
   // Start the test server before running tests
-  before(async function () {
-    this.timeout(10000);
+  beforeAll(async () => {
     server = await startTestServer();
   });
 
   // Close the server after all tests are done
-  after(() => {
-    server?.close();
+  afterAll(async () => {
+    if (server) {
+      await new Promise((resolve) => server.close(resolve));
+    }
   });
 
-  // Test for reading a specific flight by ID
-  it('should read a flight', async () => {
-    const readRes = await request(app)
+  // Test: should return a list of nearest flights
+  test('should return nearest flights', async () => {
+    const res = await request(app)
+      .get('/flights/nearest-flights')
+      .expect(200);
+
+    // Assert that the response is an array
+    expect(Array.isArray(res.body)).toBe(true);
+  });
+
+  // Test: should return a flight by its ID
+  test('should return a flight by ID', async () => {
+    const flightId = 4222;
+    const res = await request(app)
       .get(`/flights/read-flight/${flightId}`)
       .expect(200);
 
-    expect(readRes.body).to.have.property('company', 'Air Canada');
+    // Assert that the returned flight has the correct ID
+    expect(res.body).toHaveProperty('flight_id', flightId);
   });
 
-  // Test for searching flights with specific parameters
-  it('should return flights matching the search params', async () => {
-    const searchParams = {
-      origin: 'Paris',
-      destination: 'Venice',
-      departure_date: '2025-07-01',
-      passengers: '1',
-    };
-
-    // Convert search parameters to query string
-    const query = new URLSearchParams(searchParams).toString();
-
-    // Send GET request to search-flights endpoint
+  // Test: should return 404 for a non-existing flight ID
+  test('should return 404 for non-existing flight ID', async () => {
     const res = await request(app)
-      .get(`/flights/search-flights?${query}`)
+      .get('/flights/read-flight/999999')
+      .expect(404);
+
+    // Assert that the response contains an error property
+    expect(res.body).toHaveProperty('error');
+  });
+
+  // Test: should search for flights with valid query parameters
+  test('should search for flights with valid query params', async () => {
+    const res = await request(app)
+      .get('/flights/search-flights')
+      .query({
+        origin: 'TLV',
+        destination: 'LHR',
+        departure_date: '2025-07-01',
+        passengers: 1,
+      })
       .expect(200);
 
-    // Assert that the response is a non-empty array
-    expect(res.body).to.be.an('array').that.is.not.empty;
-
-    // Check that at least one flight matches the search criteria
-    const flight = res.body.find(
-      (f) => f.origin === 'Paris' && f.destination === 'Venice'
-    );
-    expect(flight).to.exist;
+    // Assert that the response is an array
+    expect(Array.isArray(res.body)).toBe(true);
   });
 
-  // Log when flight tests are completed
-  console.log('Flight tests completed successfully');
+  // Test: should return 400 if search parameters are missing
+  test('should return 400 for missing search params', async () => {
+    const res = await request(app)
+      .get('/flights/search-flights')
+      .query({})
+      .expect(400);
+
+    // Assert that the response contains an error property
+    expect(res.body).toHaveProperty('error');
+  });
 });

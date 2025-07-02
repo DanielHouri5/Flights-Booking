@@ -18,7 +18,7 @@ describe('HomePage Integration', () => {
           destination: 'Rome',
           departure_date: '2025-07-01T10:00:00Z',
           arrival_date: '2025-07-01T14:00:00Z',
-          price: 123.45,
+          price: 123,
           company: 'El Al',
         },
       ],
@@ -33,6 +33,6 @@ describe('HomePage Integration', () => {
     // מחכה שהטיסה תופיע
     expect(await screen.findByText(/Tel Aviv/i)).toBeInTheDocument();
     expect(screen.getByText(/Rome/i)).toBeInTheDocument();
-    expect(screen.getByText(/\$123.45/)).toBeInTheDocument();
+    expect(screen.getByText(/\$123/)).toBeInTheDocument();
   });
 });

@@ -20,7 +20,9 @@ describe('HomePage', () => {
     expect(screen.getByText(/Find your perfect flight/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/From/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/To/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Search Flights/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Search Flights/i })
+    ).toBeInTheDocument();
   });
 
   test('loads nearest flights and renders them when available', async () => {
@@ -39,7 +41,9 @@ describe('HomePage', () => {
       expect(flights.length).toBe(2); // שני טורים
     });
 
-    expect(apiModule.default.get).toHaveBeenCalledWith('/flights/nearest-flights');
+    expect(apiModule.default.get).toHaveBeenCalledWith(
+      '/flights/nearest-flights'
+    );
   });
 
   test('shows search flights view after clicking search', async () => {
@@ -47,10 +51,16 @@ describe('HomePage', () => {
     apiModule.default.get.mockResolvedValueOnce({ data: mockFlights });
 
     render(<HomePage />);
-    
-    fireEvent.change(screen.getByPlaceholderText(/From/i), { target: { value: 'Tel Aviv' } });
-    fireEvent.change(screen.getByPlaceholderText(/To/i), { target: { value: 'New York' } });
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: '2' } });
+
+    fireEvent.change(screen.getByPlaceholderText(/From/i), {
+      target: { value: 'Tel Aviv' },
+    });
+    fireEvent.change(screen.getByPlaceholderText(/To/i), {
+      target: { value: 'New York' },
+    });
+    fireEvent.change(screen.getByTestId('passengers'), {
+      target: { value: '2' },
+    });
 
     fireEvent.click(screen.getByRole('button', { name: /Search Flights/i }));
 

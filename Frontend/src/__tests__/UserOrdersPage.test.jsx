@@ -32,7 +32,9 @@ describe('UserOrdersPage', () => {
     renderWithRouter('123');
 
     await waitFor(() =>
-      expect(screen.getByText(/No orders found for your id number/i)).toBeInTheDocument()
+      expect(
+        screen.getByText(/No orders found for your id number/i)
+      ).toBeInTheDocument()
     );
   });
 
@@ -41,16 +43,15 @@ describe('UserOrdersPage', () => {
     renderWithRouter('123');
 
     await waitFor(() =>
-      expect(screen.getByText(/No orders found for this ID/i)).toBeInTheDocument()
+      expect(
+        screen.getByText(/No orders found for this ID/i)
+      ).toBeInTheDocument()
     );
   });
 
   test('renders order cards when orders exist', async () => {
     api.get.mockResolvedValueOnce({
-      data: [
-        { order_id: '1' },
-        { order_id: '2' }
-      ],
+      data: [{ order_id: '1' }, { order_id: '2' }],
     });
     renderWithRouter('123');
 

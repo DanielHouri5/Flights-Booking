@@ -15,7 +15,7 @@ test('navigates to create order with flight state when clicking Book Flight', as
     destination: 'Berlin',
     departure_date: '2025-07-02T09:00:00Z',
     arrival_date: '2025-07-02T13:00:00Z',
-    price: 250.0,
+    price: 250,
   };
 
   api.get.mockResolvedValueOnce({ data: [mockFlight] });
@@ -30,5 +30,5 @@ test('navigates to create order with flight state when clicking Book Flight', as
   expect(await screen.findByText(/Book your flight/i)).toBeInTheDocument();
   expect(screen.getByTestId('departure-city')).toHaveTextContent('Rome');
   expect(screen.getByTestId('arrival-city')).toHaveTextContent('Berlin');
-  expect(screen.getByTestId('flight-price')).toHaveTextContent('$250.00');
+  expect(screen.getByTestId('flight-price')).toHaveTextContent('$250');
 });

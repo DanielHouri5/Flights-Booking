@@ -1,29 +1,30 @@
-/* eslint-env mocha */
 import request from 'supertest';
-import chai from 'chai';
 import { app, startTestServer } from './testFlights.js';
 
-const { expect } = chai;
 let server;
 
-// Test suite for order-related endpoints
+// Set Jest timeout for all tests in this file
+jest.setTimeout(10000); // Important: set outside of beforeAll
+
+// Test suite for Order API endpoints
 describe('Order Test', () => {
   const userId = 99999;
   let createdOrder = null;
 
   // Start the test server before running tests
-  before(async function () {
-    this.timeout(10000);
+  beforeAll(async () => {
     server = await startTestServer();
   });
 
   // Close the server after all tests are done
-  after(() => {
-    server?.close();
+  afterAll(async () => {
+    if (server) {
+      await new Promise((resolve) => server.close(resolve));
+    }
   });
 
-  // Test for creating a new order
-  it('should create an order', async () => {
+  // Test: should create a new order
+  test('should create an order', async () => {
     const orderData = {
       user_id: userId,
       user_name: 'Test User',
@@ -41,25 +42,29 @@ describe('Order Test', () => {
       .expect(201);
 
     // Assert that the response contains the created order
-    expect(res.body).to.have.property('order');
-    expect(res.body.order).to.have.property('order_id');
-    expect(res.body.order.user_name).to.equal('Test User');
+    expect(res.body).toHaveProperty('order');
+    expect(res.body.order).toHaveProperty('order_id');
+    expect(res.body.order.user_name).toBe('Test User');
     createdOrder = res.body.order;
   });
 
-  // Test for fetching all orders for a specific user
-  it('should fetch orders for a user', async () => {
+  // Test: should fetch all orders for a specific user
+  test('should fetch orders for a user', async () => {
     const res = await request(app)
       .get(`/orders/read-orders/${userId}`)
       .expect(200);
 
-    // Assert that the response is an array and contains the created order
-    expect(res.body).to.be.an('array');
-    expect(res.body.length).to.be.greaterThan(0);
+    // Assert that the response is an array and contains at least one order
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+
+    // Find the created order in the response
     const found = res.body.find(
       (order) => order.order_id === createdOrder.order_id
     );
-    expect(found).to.exist;
-    expect(found.user_email).to.equal('test@example.com');
+
+    // Assert that the created order is present and has the correct email
+    expect(found).toBeDefined();
+    expect(found.user_email).toBe('test@example.com');
   });
 });

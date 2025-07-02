@@ -8,12 +8,40 @@ import TextField from '@mui/material/TextField';
 
 // List of cities for the autocomplete fields
 const cities = [
-  'Tel Aviv', 'New York', 'Paris', 'London', 'Rome', 'Berlin',
-  'Athens', 'Madrid', 'Albania', 'Dubai', 'Istanbul', 'Bangkok', 'Tokyo',
-  'Barcelona', 'Amsterdam', 'Moscow', 'San Francisco', 'Toronto',
-  'Los Angeles', 'Copenhagen', 'Lisbon', 'Venice', 'Prague',
-  'Cape Town', 'Singapore', 'Hong Kong', 'Buenos Aires', 'Vancouver',
-  'Rio de Janeiro', 'Delhi', 'Shanghai', 'Mexico City', 'Miami', 'Switzerland'
+  'Tel Aviv',
+  'New York',
+  'Paris',
+  'London',
+  'Rome',
+  'Berlin',
+  'Athens',
+  'Madrid',
+  'Albania',
+  'Dubai',
+  'Istanbul',
+  'Bangkok',
+  'Tokyo',
+  'Barcelona',
+  'Amsterdam',
+  'Moscow',
+  'San Francisco',
+  'Toronto',
+  'Los Angeles',
+  'Copenhagen',
+  'Lisbon',
+  'Venice',
+  'Prague',
+  'Cape Town',
+  'Singapore',
+  'Hong Kong',
+  'Buenos Aires',
+  'Vancouver',
+  'Rio de Janeiro',
+  'Delhi',
+  'Shanghai',
+  'Mexico City',
+  'Miami',
+  'Switzerland',
 ];
 
 // HomePage component displays the search form and featured/upcoming flights
@@ -150,6 +178,7 @@ function HomePage() {
           {/* Passengers select input */}
           <select
             name="passengers"
+            data-testid="passengers"
             value={searchParams.passengers}
             onChange={handleInputChange}
           >
