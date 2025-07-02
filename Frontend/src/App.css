@@ -1,6 +1,6 @@
 /* App.css */
 
-/* Global Reset */
+/* Global Reset for all elements */
 * {
   margin: 0;
   padding: 0;
@@ -8,8 +8,10 @@
 }
 
 /* =====================
-   Header
+   Header Styles
 ===================== */
+
+/* Main header container */
 .header {
   background: linear-gradient(to right, #02294d, #2e74f0);
   color: white;
@@ -23,16 +25,19 @@
   z-index: 1000;
 }
 
+/* Header title styling */
 .header h1 {
   font-size: 1.8rem;
   font-weight: bold;
 }
 
+/* Navigation links container */
 .nav-links {
   display: flex;
   gap: 1.2rem;
 }
 
+/* Navigation link styling */
 .nav-links a {
   color: white;
   text-decoration: none;
@@ -40,9 +45,12 @@
   transition: color 0.3s ease;
 }
 
+/* Navigation link hover effect */
 .nav-links a:hover {
   color: #ffc107;
 }
+
+/* Ensure full height for root elements */
 html,
 body,
 #root {
@@ -50,16 +58,19 @@ body,
   margin: 0;
 }
 
+/* Main app container for layout */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+/* Main content area grows to fill space */
 .content {
   flex: 1;
 }
 
+/* Dropdown wrapper for user/account menu */
 .dropdown-wrapper {
   position: relative;
   display: flex;
@@ -67,6 +78,7 @@ body,
   align-items: center;
 }
 
+/* Dropdown and home button styling */
 .dropdown-button, .home-button {
   padding: 8px 12px;
   background-color: #0077cc;
@@ -77,6 +89,7 @@ body,
   text-decoration: none;
 }
 
+/* Dropdown popup menu styling */
 .dropdown-popup {
   position: absolute;
   top: 45px;
@@ -91,6 +104,7 @@ body,
   min-width: 200px;
 }
 
+/* Dropdown popup button styling */
 .dropdown-popup button {
   background: none;
   border: none;
@@ -100,10 +114,12 @@ body,
   cursor: pointer;
 }
 
+/* Dropdown popup button hover effect */
 .dropdown-popup button:hover {
   background-color: #2e74f0;
 }
 
+/* Modal header styling */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -112,6 +128,7 @@ body,
   color: black;
 }
 
+/* Close button for modal */
 .close-button {
   background: none;
   border: none;
@@ -120,12 +137,14 @@ body,
   color: #888;
 }
 
+/* Modal buttons container */
 .modal-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
 
+/* Clear button styling */
 .clear-button {
   background-color: #6c757d; /* gray */
   color: white;
@@ -135,6 +154,7 @@ body,
   cursor: pointer;
 }
 
+/* Submit button styling */
 .submit-button {
   background-color: #007bff; /* blue */
   color: white;
@@ -144,15 +164,21 @@ body,
   cursor: pointer;
 }
 
+/* Clear button hover effect */
 .clear-button:hover {
   background-color: #5a6268;
 }
 
+/* Submit button hover effect */
 .submit-button:hover {
   background-color: #0069d9;
 }
 
-/* Modal styles */
+/* =====================
+   Modal Styles
+===================== */
+
+/* Modal overlay background */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -166,6 +192,7 @@ body,
   z-index: 100;
 }
 
+/* Modal content container */
 .modal {
   background: white;
   padding: 30px;
@@ -175,6 +202,7 @@ body,
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Modal input fields */
 .modal input {
   width: 100%;
   margin-bottom: 15px;
@@ -185,6 +213,7 @@ body,
   border-radius: 4px;
 }
 
+/* Modal buttons layout */
 .modal-buttons {
   display: flex;
   justify-content: center;
@@ -192,7 +221,9 @@ body,
   margin-top: 20px;
 }
 
-
+/* =====================
+   Base Styles
+===================== */
 
 /* Base font and background */
 body {
@@ -210,8 +241,10 @@ body {
 }
 
 /* =====================
-   Footer
+   Footer Styles
 ===================== */
+
+/* Footer main container */
 .footer {
   background: linear-gradient(to right, #043364, #3a8df3);
   padding: 2rem;
@@ -221,12 +254,14 @@ body {
   border-top: 1px solid #ddd;
 }
 
+/* Footer links styling */
 .footer a {
   color: white;
   text-decoration: none;
   margin: 0 0.5rem;
 }
 
+/* Footer link hover effect */
 .footer a:hover {
   text-decoration: underline;
 }

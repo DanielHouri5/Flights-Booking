@@ -1,6 +1,8 @@
 /* =====================
    Hero / Search Section
 ===================== */
+
+/* Hero section background and layout */
 .hero {
   background: linear-gradient(to right, #043364, #3a8df3);
   color: white;
@@ -8,16 +10,19 @@
   padding: 4rem 2rem;
 }
 
+/* Hero section main title */
 .hero h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
+/* Hero section subtitle/description */
 .hero p {
   font-size: 1.1rem;
   margin-bottom: 2rem;
 }
 
+/* Search box container styling */
 .search-box {
   background: white;
   padding: 2rem;
@@ -30,6 +35,7 @@
   gap: 1rem;
 }
 
+/* Custom MUI TextField styling inside the search box */
 .search-box .customTextField .MuiOutlinedInput-root {
   background-color: white;
   border-radius: 8px !important;
@@ -41,21 +47,25 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Outlined input border color */
 .search-box .customTextField .MuiOutlinedInput-notchedOutline {
   border-color: #ccc !important;
 }
 
+/* Focused input styling */
 .search-box .customTextField .MuiOutlinedInput-root.Mui-focused {
   border-color: #007bff !important;
   box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
   background-color: white;
 }
 
+/* Input text styling */
 .search-box .customTextField .MuiInputBase-input {
   padding: 8px 12px !important;
   font-size: 1rem;
 }
 
+/* Date input and select styling */
 .search-box input[type="date"],
 .search-box select {
   width: 100%;
@@ -69,6 +79,7 @@
   background-color: white;
 }
 
+/* Focus state for date input and select */
 .search-box input[type="date"]:focus,
 .search-box select:focus {
   outline: none;
@@ -76,7 +87,7 @@
   box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
 }
 
-
+/* Search button styling */
 .search-box button {
   font-weight: 600;
   font-size: 1rem;
@@ -88,10 +99,12 @@
   transition: background-color 0.3s ease;
 }
 
+/* Search button hover effect */
 .search-box button:hover {
   background-color: #0056b3;
 }
 
+/* Search button container for grid layout */
 .search-button {
   grid-column: 1 / -1;
   display: flex;
@@ -99,6 +112,7 @@
   margin-top: 10px;
 }
 
+/* Clear indicator styling for MUI Autocomplete */
 .search-box .MuiAutocomplete-clearIndicator {
   background: transparent !important;
   box-shadow: none !important;
@@ -106,6 +120,7 @@
   transition: color 0.2s ease;
 }
 
+/* Clear indicator hover effect */
 .search-box .MuiAutocomplete-clearIndicator:hover {
   background: transparent !important;
   color: #007bff;
@@ -116,6 +131,8 @@
 /* =====================
    Featured Section Styling
 ===================== */
+
+/* Featured flights section container */
 .featured-section {
   background-color: #f8f9fa;
   border-radius: 16px;
@@ -128,6 +145,7 @@
   max-width: 100%;
 }
 
+/* Featured section title styling */
 .featured-section h2 {
   font-size: 2rem;
   font-weight: 600;
@@ -144,10 +162,12 @@
   width: fit-content;
 }
 
+/* Featured section title hover effect */
 .featured-section h2:hover {
   background: rgba(0, 123, 255, 0.2);
 }
 
+/* Double column layout for featured flights */
 .flights-double-column {
   display: flex;
   gap: 2rem;
@@ -157,6 +177,7 @@
   max-width: 1600px;
 }
 
+/* Single and double column containers for flights */
 .flights-column,
 .flights-single-column {
   flex: 1;
@@ -167,16 +188,17 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   overflow-y: auto;
   max-height: 600px;
-  
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
+/* Hide scrollbars for columns */
 .flights-column::-webkit-scrollbar,
 .flights-single-column::-webkit-scrollbar {
   display: none;
 }
 
+/* Single column layout for featured flights */
 .flights-single-column {
   width: 100%;
   max-width: 700px;
@@ -187,6 +209,8 @@
 /* =====================
    Responsive Tweaks
 ===================== */
+
+/* Responsive styles for tablets and mobile screens */
 @media (max-width: 768px) {
   .hero h2 {
     font-size: 1.6rem;

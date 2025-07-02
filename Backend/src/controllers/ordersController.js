@@ -1,5 +1,6 @@
 import { ordersService } from '../services/ordersService.js';
 
+// Controller to create a new order
 export const createOrder = async (req, res) => {
   try {
     const {
@@ -12,6 +13,7 @@ export const createOrder = async (req, res) => {
       num_passengers,
     } = req.body;
 
+    // Validate required order fields
     if (
       !user_id || !user_name || !user_email || !flight_id ||
       !order_date || !price || !num_passengers
@@ -19,6 +21,7 @@ export const createOrder = async (req, res) => {
       return res.status(400).json({ error: 'Missing required order fields' });
     }
 
+    // Call the service to create a new order
     const newOrder = await ordersService.createOrder({
       user_id,
       user_name,
@@ -41,6 +44,7 @@ export const createOrder = async (req, res) => {
   }
 };
 
+// Controller to get all orders for a specific user by user ID
 export const readOrders = async (req, res) => {
   try {
     const { userId } = req.params;

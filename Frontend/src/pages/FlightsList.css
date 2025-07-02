@@ -1,3 +1,4 @@
+/* Wrapper for the entire flights list page */
 .flights-list-wrapper {
   display: flex;
   flex-direction: column;
@@ -7,20 +8,25 @@
   justify-content: center;
 }
 
+/* Wrapper for each individual flight card */
 .flight-card-wrapper {
   width: 100%;
   max-width: 700px;
 }
 
+/* Remove bottom margin for the last flight card */
 .flight-card-wrapper:last-child {
   margin-bottom: 0;
 }
 
+/* Responsive styles for mobile screens */
 @media (max-width: 700px) {
+  /* Make flight card take full width on mobile */
   .flight-card-wrapper {
     max-width: 100% !important;
   }
 
+  /* Reduce padding for the flights list on mobile */
   .flights-list-wrapper {
     padding: 16px 8px;
   }

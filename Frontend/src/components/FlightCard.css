@@ -1,3 +1,4 @@
+/* Main container for the flight card */
 .flight-card {
   margin-top: 10px;
   display: flex;
@@ -16,10 +17,12 @@
   box-sizing: border-box;
 }
 
+/* Card hover effect */
 .flight-card:hover {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
+/* Logo section styling */
 .flight-card__logo img {
   width: 70px;
   height: 70px;
@@ -27,6 +30,7 @@
   border-radius: 10px;
 }
 
+/* Info section styling */
 .flight-card__info {
   display: flex;
   flex-direction: column;
@@ -35,17 +39,20 @@
   gap: 6px;
 }
 
+/* Company info text */
 .flight-card__company-info {
   font-size: 1rem;
   color: #333;
   font-weight: 500;
 }
 
+/* Flight number text */
 .flight-card__flight-number {
   font-size: 0.9rem;
   color: #777;
 }
 
+/* Details section layout */
 .flight-card__details {
   display: flex;
   align-items: center;
@@ -54,6 +61,7 @@
   gap: 24px;
 }
 
+/* Departure/arrival time and city section */
 .flight-card__time-city {
   display: flex;
   flex-direction: column;
@@ -62,6 +70,7 @@
   max-width: 140px;
 }
 
+/* Departure and arrival date styling */
 .flight-card__departure-date,
 .flight-card__arrival-date {
   font-size: 1.1rem;
@@ -70,6 +79,7 @@
   margin-bottom: 2px;
 }
 
+/* Departure and arrival time styling */
 .flight-card__departure-time,
 .flight-card__arrival-time {
   font-size: 1.1rem;
@@ -78,6 +88,7 @@
   margin-bottom: 4px;
 }
 
+/* Departure and arrival city styling */
 .flight-card__departure-city,
 .flight-card__arrival-city {
   font-size: 1rem;
@@ -85,12 +96,14 @@
   color: #444;
 }
 
+/* Arrow icon between cities */
 .flight-card__arrow {
   font-size: 1.8rem;
   color: #888;
   user-select: none;
 }
 
+/* Price section styling */
 .flight-card__price-section {
   text-align: right;
   min-width: 130px;
@@ -101,6 +114,7 @@
   align-items: center;
 }
 
+/* Vertical separator line in price section */
 .flight-card__separator {
   position: absolute;
   left: 0;
@@ -111,6 +125,7 @@
   border-radius: 1px;
 }
 
+/* Price text styling */
 .flight-card__price {
   font-size: 1.4rem;
   font-weight: bold;
@@ -118,11 +133,13 @@
   text-align: left;
 }
 
+/* Per person price text */
 .flight-card__per-person {
   font-size: 0.75rem;
   color: #999;
 }
 
+/* Book button styling */
 .flight-card__book-btn {
   margin-top: 10px;
   padding: 10px 16px;
@@ -137,6 +154,7 @@
   width: 100%;
 }
 
+/* Book button hover effect */
 .flight-card__book-btn:hover {
   background-color: #0056b3;
 }

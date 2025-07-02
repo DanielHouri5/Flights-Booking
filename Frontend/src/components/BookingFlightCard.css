@@ -1,3 +1,4 @@
+/* Main container for the booking flight card */
 .booking-flight-card {
   margin-top: 5px;
   display: flex;
@@ -16,10 +17,12 @@
   box-sizing: border-box;
 }
 
+/* Card hover effect */
 .booking-flight-card:hover {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
+/* Logo section styling */
 .booking-flight-card__logo img {
   width: 70px;
   height: 70px;
@@ -27,6 +30,7 @@
   border-radius: 10px;
 }
 
+/* Info section styling */
 .booking-flight-card__info {
   display: flex;
   flex-direction: column;
@@ -35,6 +39,7 @@
   gap: 6px;
 }
 
+/* Company info text */
 .booking-flight-card__company-info {
   font-size: 1rem;
   color: #333;
@@ -42,11 +47,13 @@
   white-space: pre-line; 
 }
 
+/* Flight number text */
 .booking-flight-card__flight-number {
   font-size: 0.9rem;
   color: #777;
 }
 
+/* Details section layout */
 .booking-flight-card__details {
   display: flex;
   align-items: center;
@@ -55,6 +62,7 @@
   gap: 24px;
 }
 
+/* Departure/arrival time and city section */
 .booking-flight-card__time-city {
   display: flex;
   flex-direction: column;
@@ -63,6 +71,7 @@
   max-width: 140px;
 }
 
+/* Departure and arrival date styling */
 .booking-flight-card__departure-date,
 .booking-flight-card__arrival-date {
   font-size: 0.9rem;
@@ -71,6 +80,7 @@
   margin-bottom: 2px;
 }
 
+/* Departure and arrival time styling */
 .booking-flight-card__departure-time,
 .booking-flight-card__arrival-time {
   font-size: 1.1rem;
@@ -79,6 +89,7 @@
   margin-bottom: 4px;
 }
 
+/* Departure and arrival city styling */
 .booking-flight-card__departure-city,
 .booking-flight-card__arrival-city {
   font-size: 1rem;
@@ -86,12 +97,14 @@
   color: #444;
 }
 
+/* Arrow icon between cities */
 .booking-flight-card__arrow {
   font-size: 1.8rem;
   color: #888;
   user-select: none;
 }
 
+/* Price section styling */
 .booking-flight-card__price-section {
   text-align: right;
   min-width: 130px;
@@ -102,6 +115,7 @@
   align-items: center;
 }
 
+/* Vertical separator line in price section */
 .booking-flight-card__separator {
   position: absolute;
   left: 0;
@@ -112,6 +126,7 @@
   border-radius: 1px;
 }
 
+/* Price text styling */
 .booking-flight-card__price {
   font-size: 1.4rem;
   font-weight: bold;
@@ -119,11 +134,13 @@
   text-align: left;
 }
 
+/* Per person price text */
 .booking-flight-card__per-person {
   font-size: 0.75rem;
   color: #999;
 }
 
+/* Company name styling */
 .booking-flight-card__company-name {
   font-size: 0.8rem;
   font-weight: 500;
@@ -133,21 +150,7 @@
   white-space: pre-line;
 }
 
-/* מדיה — בטלפונים, נזיז את שם החברה לימין הלוגו */
-@media (max-width: 700px) {
-  .booking-flight-card__logo {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .booking-flight-card__company-name {
-    margin-top: 0;
-    margin-left: 10px;
-    text-align: left;
-  }
-}
-
-/* Responsive */
+/* Responsive styles for mobile screens */
 @media (max-width: 700px) {
   .booking-flight-card {
     display: flex;
@@ -171,7 +174,7 @@
     align-self: flex-start;
   }
 
-    .booking-flight-card__company-name {
+  .booking-flight-card__company-name {
     margin-top: 0;
     margin-left: 10px;
     text-align: left;

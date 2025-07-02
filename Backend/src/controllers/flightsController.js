@@ -1,5 +1,6 @@
 import { flightsService } from '../services/flightsService.js';
 
+// Controller to get flight details by flight number (ID)
 export const readFlightByFlightNum = async (req, res) => {
   try {
     const { flightId } = req.params;
@@ -12,16 +13,19 @@ export const readFlightByFlightNum = async (req, res) => {
   }
 };
 
+// Controller to search for flights based on query parameters
 export const searchFlights = async (req, res) => {
   try {
     const { origin, destination, departure_date, passengers } = req.query;
 
+    // Validate required query parameters
     if (!origin || !destination || !departure_date || !passengers) {
       return res
         .status(400)
         .json({ error: 'Missing required query parameters' });
     }
 
+    // Call the service to search for flights
     const flights = await flightsService.searchFlights({
       origin,
       destination,
@@ -38,6 +42,7 @@ export const searchFlights = async (req, res) => {
   }
 };
 
+// Controller to get the nearest available flights
 export const getNearestFlights = async (req, res) => {
   try {
     const now = new Date();

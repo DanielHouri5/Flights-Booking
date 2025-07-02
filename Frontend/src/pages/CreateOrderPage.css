@@ -1,3 +1,4 @@
+/* Main container for the create order page */
 .create-order {
   max-width: 600px;
   margin: 2rem auto;
@@ -8,10 +9,12 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Wrapper for the flight card preview */
 .flight-card-wrapper {
   margin-bottom: 2rem;
 }
 
+/* Order form label styling */
 .order-form label {
   display: block;
   margin-bottom: 1rem;
@@ -19,6 +22,7 @@
   color: #333;
 }
 
+/* Input and select styling for the order form */
 .order-form input,
 .order-form select {
   width: 100%;
@@ -30,12 +34,14 @@
   transition: border-color 0.3s ease;
 }
 
+/* Focus state for form inputs and selects */
 .order-form input:focus,
 .order-form select:focus {
   border-color: #007bff;
   outline: none;
 }
 
+/* Total price display styling */
 .total-price {
   margin: 1rem 0;
   font-size: 1.2rem;
@@ -43,18 +49,21 @@
   color: #007bff;
 }
 
+/* Error message styling */
 .error-msg {
   color: #dc3545;
   font-weight: 700;
   margin-bottom: 1rem;
 }
 
+/* Success message styling */
 .success-msg {
   color: #28a745;
   font-weight: 700;
   margin-bottom: 1rem;
 }
 
+/* General button styling */
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
@@ -66,15 +75,18 @@
   transition: background-color 0.3s ease;
 }
 
+/* Primary button styling */
 .btn-primary {
   background-color: #007bff;
   color: white;
 }
 
+/* Primary button hover effect */
 .btn-primary:hover {
   background-color: #0056b3;
 }
 
+/* Styling for when no flight is found */
 .no-flight {
   max-width: 400px;
   margin: 5rem auto;
@@ -83,6 +95,7 @@
   color: #555;
 }
 
+/* Book button styling */
 .book-btn {
   background-color: #007bff;
   color: white;
@@ -97,6 +110,7 @@
   margin: 20px auto 0 auto;
 }
 
+/* Book button hover effect */
 .book-btn:hover {
   background-color: #0056b3;
 }
