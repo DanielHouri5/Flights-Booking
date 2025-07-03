@@ -37,7 +37,7 @@ jobs:
           cd Backend
           npm run lint
 
-      - name: Run Tests
+      - name: Run Unit and Integration Tests
         run: |
           cd Backend
           npm test
@@ -45,7 +45,7 @@ jobs:
   deploy-to-cloud-run:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/production'
+    if: github.ref == 'refs/heads/production' || github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -19,7 +19,7 @@ export async function startTestServer() {
     // Initialize the database before starting the server
     await initDb();
     return new Promise((resolve, reject) => {
-      server = app.listen(4000, () => {
+      server = app.listen(0, () => {
         console.log('Flights service running on port 4000');
         resolve(server);
       });

@@ -23,9 +23,6 @@ pids/
 *.seed
 *.pid.lock
 
-# dotenv
-.env
-
 # Editor config
 .vscode/
 .idea/

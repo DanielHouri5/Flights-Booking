@@ -1,63 +1,67 @@
 import { Sequelize, DataTypes } from 'sequelize';
+import { Orders } from './src/data-access/ordersModel.js';
+import { Flights } from './src/data-access/flightsModel.js';
 
-const sequelize = new Sequelize('postgres://postgres:pass@db:5432/flight_booking', {
-  dialect: 'postgres',
-  logging: false,
-});
-
-const Flights = sequelize.define('flight', {
-  flight_id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  company: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  origin: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  destination: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  departure_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  arrival_date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-  },
-  seats_available: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-}, {
-  tableName: 'flights',
-  timestamps: false,
-});
+const sequelize = new Sequelize(
+  'postgres://postgres:pass@db:5432/flight_booking',
+  {
+    dialect: 'postgres',
+    logging: false,
+  }
+);
 
 const cities = [
-  'Tel Aviv', 'New York', 'Paris', 'London', 'Rome', 'Berlin',
-  'Athens', 'Madrid', 'Albania', 'Dubai', 'Istanbul', 'Bangkok', 'Tokyo',
-  'Barcelona', 'Amsterdam', 'Moscow', 'San Francisco', 'Toronto',
-  'Los Angeles', 'Copenhagen', 'Lisbon', 'Venice', 'Prague',
-  'Cape Town', 'Singapore', 'Hong Kong', 'Buenos Aires', 'Vancouver',
-  'Rio de Janeiro', 'Delhi', 'Shanghai', 'Mexico City', 'Miami', 'Switzerland'
+  'Tel Aviv',
+  'New York',
+  'Paris',
+  'London',
+  'Rome',
+  'Berlin',
+  'Athens',
+  'Madrid',
+  'Albania',
+  'Dubai',
+  'Istanbul',
+  'Bangkok',
+  'Tokyo',
+  'Barcelona',
+  'Amsterdam',
+  'Moscow',
+  'San Francisco',
+  'Toronto',
+  'Los Angeles',
+  'Copenhagen',
+  'Lisbon',
+  'Venice',
+  'Prague',
+  'Cape Town',
+  'Singapore',
+  'Hong Kong',
+  'Buenos Aires',
+  'Vancouver',
+  'Rio de Janeiro',
+  'Delhi',
+  'Shanghai',
+  'Mexico City',
+  'Miami',
+  'Switzerland',
 ];
 
 const companies = [
-  'El Al', 'Delta', 'Air France', 'Turkish Airlines',
-  'British Airways', 'Emirates', 'Qatar Airways',
-  'American Airlines', 'Air Canada', 'Alaska Airlines', 'EasyJet', 'Ryanair',
-  'JetBlue', 'Southwest Airlines'
+  'El Al',
+  'Delta',
+  'Air France',
+  'Turkish Airlines',
+  'British Airways',
+  'Emirates',
+  'Qatar Airways',
+  'American Airlines',
+  'Air Canada',
+  'Alaska Airlines',
+  'EasyJet',
+  'Ryanair',
+  'JetBlue',
+  'Southwest Airlines',
 ];
 
 function randomFromArray(arr) {
@@ -67,7 +71,8 @@ function randomFromArray(arr) {
 function randomDateWithinNextMonth() {
   const now = new Date();
   const max = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // חודש קדימה
-  const randomTime = now.getTime() + Math.random() * (max.getTime() - now.getTime());
+  const randomTime =
+    now.getTime() + Math.random() * (max.getTime() - now.getTime());
   const date = new Date(randomTime);
   date.setMinutes([0, 15, 30, 45][Math.floor(Math.random() * 4)]);
   date.setSeconds(0);
@@ -99,11 +104,12 @@ async function seedFlights(count = 5000) {
         destination,
         departure_date: departure,
         arrival_date: arrival,
-        price: Math.floor((Math.random() * 650 + 150)),
+        price: Math.floor(Math.random() * 650 + 150),
         seats_available: Math.floor(Math.random() * 130) + 20,
       });
     }
 
+    await Orders.destroy({ where: {} });
     await Flights.destroy({ where: {} });
     await Flights.bulkCreate(flights);
     console.log(`🎉 Inserted ${count} flights.`);

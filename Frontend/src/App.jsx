@@ -133,7 +133,7 @@ function App() {
           </Routes>
         </main>
 
-        {/* Footer with links */}
+        {/* Footer with links  */}
         <footer className="footer">
           <p>© 2025 SkyFlights. All rights reserved.</p>
           <div>
