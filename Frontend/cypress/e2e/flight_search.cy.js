@@ -1,0 +1,40 @@
+describe('Flight Search - E2E Test', () => {
+  it('should search and display mocked flight results', () => {
+    // זיהוי וזיוף קריאה ל-API
+    cy.intercept('GET', '**/flights/search*', {
+      statusCode: 200,
+      body: [
+        {
+          flight_id: 'MOCK123',
+          origin: 'London',
+          destination: 'Madrid',
+          departure_date: '2025-07-10T08:00:00Z',
+          arrival_date: '2025-07-10T12:00:00Z',
+          company: 'MockAir',
+          price: 180.0,
+        },
+      ],
+    }).as('mockSearch');
+
+    // כניסה לאתר המקומי שלך
+    cy.visit('http://localhost:5173/');
+
+    // מילוי שדות טופס חיפוש
+    cy.get('input[placeholder="From"]').type('London');
+    cy.get('input[placeholder="To"]').type('Madrid');
+    cy.get('input[type="date"]').type('2025-07-10');
+    cy.get('select[name="passengers"]').select('1');
+
+    // לחיצה על כפתור חיפוש
+    cy.contains('Search Flights').click();
+
+    // המתן לתשובת ה-API המזויפת
+    cy.wait('@mockSearch');
+
+    // בדוק שהתוצאה מוצגת בהתאם לנתונים המזויפים
+    cy.get('[data-testid="departure-city"]').should('contain.text', 'London');
+    cy.get('[data-testid="arrival-city"]').should('contain.text', 'Madrid');
+    cy.get('[data-testid="flight-price"]').should('contain.text', '$180.00');
+    cy.get('[data-testid="book-button"]').should('be.visible');
+  });
+});

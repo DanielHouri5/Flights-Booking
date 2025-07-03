@@ -8,7 +8,7 @@
 .order-card-wrapper {
   width: 100%;
   max-width: 600px;
-  margin-bottom: 16px; /* קטן יותר */
+  margin-bottom: 16px;
   display: flex;
   justify-content: center;
 }

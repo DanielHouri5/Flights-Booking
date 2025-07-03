@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  Link,
+} from 'react-router-dom';
 import HomePage from './pages/HomePage.jsx';
 import UserOrdersPage from './pages/UserOrdersPage.jsx';
 import CreateOrderPage from './pages/CreateOrderPage.jsx';
@@ -48,7 +54,9 @@ function SearchModal({ isOpen, onClose }) {
       <div className="modal">
         <div className="modal-header">
           <h3>Search by User ID</h3>
-          <button className="close-button" onClick={resetForm}>✖</button>
+          <button className="close-button" onClick={resetForm}>
+            ✖
+          </button>
         </div>
 
         <input
@@ -65,8 +73,12 @@ function SearchModal({ isOpen, onClose }) {
         />
 
         <div className="modal-buttons">
-          <button className="clear-button" onClick={resetForm}>Clear</button>
-          <button className="submit-button" onClick={handleSearch}>Submit</button>
+          <button className="clear-button" onClick={resetForm}>
+            Clear
+          </button>
+          <button className="submit-button" onClick={handleSearch}>
+            Submit
+          </button>
         </div>
       </div>
     </div>
@@ -85,8 +97,12 @@ function App() {
         <header className="header">
           <h1>SkyFlights</h1>
           <nav className="nav-links">
-            <Link to="/" className="nav-link">Home</Link>
-            <Link to="#" onClick={openSearchModal} className="nav-link">My Orders</Link>
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+            <Link to="#" onClick={openSearchModal} className="nav-link">
+              My Orders
+            </Link>
           </nav>
         </header>
 
@@ -94,7 +110,10 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/create-order" element={<CreateOrderPage />} />
-            <Route path="/orders/read-orders/:userId" element={<UserOrdersPage />} />
+            <Route
+              path="/orders/read-orders/:userId"
+              element={<UserOrdersPage />}
+            />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
           </Routes>

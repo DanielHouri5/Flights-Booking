@@ -33,9 +33,11 @@ function OrderCard({ order }) {
           <li><strong>User ID:</strong> {user_id}</li>
           <li><strong>Name:</strong> {user_name}</li>
           <li><strong>Email:</strong> {user_email}</li>
+         </ul>
+        <ul>
           <li><strong>Order Date:</strong> {new Date(order_date).toLocaleDateString()}</li>
-          <li><strong>Total Price:</strong> ${price}</li>
-          <li><strong>Passengers:</strong> {num_passengers}</li>
+          <li data-testid="order-total-price"><strong>Total Price:</strong> ${price}</li>
+          <li data-testid="order-passengers"><strong>Passengers:</strong> {num_passengers}</li>
         </ul>
       </section>
     </div>

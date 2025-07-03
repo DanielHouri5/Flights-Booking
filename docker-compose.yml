@@ -53,6 +53,7 @@ services:
     networks:
       - app-network
 
+<<<<<<< HEAD
   seed:
     image: node:20
     working_dir: /app
@@ -71,6 +72,11 @@ services:
 volumes:
   pgdata:
 
+=======
+volumes:
+  pgdata:
+
+>>>>>>> 4cdcdbee561da45cfc6b9feec74ca0b0bff160f4
 networks:
   app-network:
     driver: bridge
