@@ -37,7 +37,8 @@ jobs:
         run: |
           cd Frontend
           npm run lint
-
+        env:
+          VITE_SERVICE_URL: ${{ secrets.VITE_SERVICE_URL }}
       # - name: Run Tests
       #   run: |
       #     cd Frontend
