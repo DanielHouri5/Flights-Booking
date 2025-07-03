@@ -159,7 +159,6 @@
   background-color: #0056b3;
 }
 
-
 /* Responsive */
 /* Mobile style inspired by Skyscanner */
 
@@ -183,9 +182,8 @@
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
-    align-self: flex-start; 
+    align-self: flex-start;
   }
-
 
   .flight-card__logo img {
     width: 40px;
@@ -200,7 +198,7 @@
 
   .flight-card__details {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     text-align: center;
@@ -281,6 +279,4 @@
   .flight-card__separator {
     display: none;
   }
-
-
 }

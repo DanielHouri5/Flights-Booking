@@ -32,6 +32,8 @@ jobs:
         run: |
           cd Frontend
           npm run build
+        env:
+          VITE_SERVICE_URL: ${{ secrets.VITE_SERVICE_URL }}
 
       - name: Run Linter
         run: |
@@ -73,7 +75,7 @@ jobs:
 
       - name: Build and push Frontend Docker image
         run: |
-          docker build -t gcr.io/devops-workshop-462511/flights-frontend Frontend/
+          docker build --build-arg VITE_SERVICE_URL=${{ secrets.VITE_SERVICE_URL }} -t gcr.io/devops-workshop-462511/flights-frontend Frontend/
           docker push gcr.io/devops-workshop-462511/flights-frontend
 
       - name: Deploy to Cloud Run
@@ -83,4 +85,4 @@ jobs:
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated \
-            --set-env-vars "DATABASE_URL=${{ secrets.DATABASE_URL }}"
+            --set-env-vars "VITE_SERVICE_URL=${{ secrets.VITE_SERVICE_URL }}"

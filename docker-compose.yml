@@ -1,35 +1,76 @@
+version: '3.8'
+
 services:
-  backend:
-    build: ./Backend
-    ports:
-      - '8080:8080'
-    environment:
-      - DATABASE_URL=postgres://postgres:pass@db:5432/flight_booking
-    depends_on:
-      - db
-
-  frontend:
-    build: ./Frontend
-    ports:
-      - '5173:5173'
-    volumes:
-      - ./Frontend:/app
-      - /app/node_modules
-    command: npm run dev -- --host
-    depends_on:
-      - backend
-
   db:
     image: postgres:15
-    restart: always
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: flight_booking
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - '5432:5432'
+    networks:
+      - app-network
+
+  seed:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - ./Backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "npm install sequelize pg && node seedFlights.js"
+    environment:
+      DATABASE_URL: postgres://postgres:pass@db:5432/flight_booking
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://postgres:pass@db:5432/flight_booking
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '8080:8080'
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_SERVICE_URL=${VITE_SERVICE_URL}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_SERVICE_URL: ${VITE_SERVICE_URL}
+    ports:
+      - '5173:8080'
+    networks:
+      - app-network
 
 volumes:
   pgdata:
+
+networks:
+  app-network:
+    driver: bridge
