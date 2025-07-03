@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_SERVICE_URL || 'http://localhost:8080';
-// const BASE_URL = 'https://flights-backend-1085375047232.us-central1.run.app';
+
 const api = axios.create({
   baseURL: BASE_URL,
 });

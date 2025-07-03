@@ -85,13 +85,7 @@
   color: #444;
 }
 
-<<<<<<<
-  HEAD
-  <<<<<<<
-  HEAD
-  =======>>>>>>>development
-  =======>>>>>>>development
-  .flight-card__arrow {
+.flight-card__arrow {
   font-size: 1.8rem;
   color: #888;
   user-select: none;
