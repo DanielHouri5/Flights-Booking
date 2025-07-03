@@ -10,7 +10,6 @@ import HomePage from './pages/HomePage.jsx';
 import UserOrdersPage from './pages/UserOrdersPage.jsx';
 import CreateOrderPage from './pages/CreateOrderPage.jsx';
 import './App.css';
-console.log('Flights');
 
 function TermsPage() {
   return (

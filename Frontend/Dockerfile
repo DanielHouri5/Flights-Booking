@@ -13,11 +13,12 @@ RUN npm install
 # Copy the rest of the application source code to the container
 COPY . .
 
+# BEFORE build
 ARG VITE_SERVICE_URL
 ENV VITE_SERVICE_URL=$VITE_SERVICE_URL
 
-# Build the React app for production; output is in the /app/dist directory
-RUN npm run build
+# Build the React app with the environment variable passed directly
+RUN VITE_SERVICE_URL=$VITE_SERVICE_URL npm run build
 
 # Use a lightweight Nginx Alpine image to serve the built static files
 FROM nginx:alpine

@@ -68,7 +68,7 @@ jobs:
 
       - name: Build and push Frontend Docker image
         run: |
-          docker build -t gcr.io/devops-workshop-462511/flights-frontend Frontend/
+          docker build --build-arg VITE_SERVICE_URL=${{ secrets.VITE_SERVICE_URL }} -t gcr.io/devops-workshop-462511/flights-frontend Frontend/
           docker push gcr.io/devops-workshop-462511/flights-frontend
 
       - name: Deploy to Cloud Run
