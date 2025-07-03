@@ -7,5 +7,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   // Register the React plugin to enable JSX and React Fast Refresh
   plugins: [react()],
-  // You can add more Vite options here if needed
+  define: {
+    'process.env.VITE_SERVICE_URL': JSON.stringify(
+      process.env.VITE_SERVICE_URL || ''
+    ),
+  },
 });

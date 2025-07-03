@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 // Get the base URL from environment variable or use localhost as default
-const BASE_URL = import.meta.env.VITE_SERVICE_URL || 'http://localhost:8080';
+const BASE_URL = process.env.VITE_SERVICE_URL || 'http://localhost:8080';
 
 // Create an Axios instance with the base URL
 const api = axios.create({
