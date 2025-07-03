@@ -1,20 +1,25 @@
+// Integration test for flight search on the HomePage
+// This test mocks API calls and checks that search results are displayed correctly
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import api from '../services/api';
 
+// Mock the API service (get and post methods)
 jest.mock('../services/api', () => ({
   get: jest.fn(),
   post: jest.fn(),
 }));
 
 describe('Flight Search Integration', () => {
+  // Test: search for flights and display the results
   test('searches and displays results', async () => {
-    // Mock nearest flights כדי שהקומפוננטה תיטען תקין
+    // Mock the nearest flights API call to return an empty array (so the component loads)
     api.get.mockResolvedValueOnce({ data: [] });
 
-    // Mock search results (שנה ל-get!)
+    // Mock the search API call to return a single flight result
     api.get.mockImplementation((url) => {
       if (url.includes('/flights/search')) {
         return Promise.resolve({
@@ -31,12 +36,14 @@ describe('Flight Search Integration', () => {
           ],
         });
       }
-      // ברירת מחדל - טיסות קרובות ריק
+      // Default: return empty array for other GET requests
       return Promise.resolve({ data: [] });
     });
 
+    // Render the HomePage inside a MemoryRouter
     render(<HomePage />, { wrapper: MemoryRouter });
 
+    // Fill in the search form fields
     fireEvent.change(screen.getByPlaceholderText(/From/i), {
       target: { value: 'London' },
     });
@@ -44,9 +51,10 @@ describe('Flight Search Integration', () => {
       target: { value: 'Madrid' },
     });
 
+    // Click the search button
     fireEvent.click(screen.getByText(/Search Flights/i));
 
-    // חכה עד שכרטיס הטיסה יופיע
+    // Wait for the flight card to appear and check its content
     expect(await screen.findByTestId('departure-city')).toHaveTextContent(
       'London'
     );

@@ -1,6 +1,8 @@
+// Cypress E2E test: Booking a flight and handling a server error on order creation
+
 describe('Flight Booking - Server Error', () => {
   it('should show error message when server returns error on booking', () => {
-    // Mock תוצאת חיפוש טיסה
+    // Mock the flight search API response
     cy.intercept('GET', '**/flights/search-flights*', {
       statusCode: 200,
       body: [
@@ -16,37 +18,40 @@ describe('Flight Booking - Server Error', () => {
       ],
     }).as('searchFlights');
 
-    // Mock שגיאת שרת בעת יצירת הזמנה
+    // Mock a server error when trying to create an order
     cy.intercept('POST', '**/orders/create-order', {
       statusCode: 500,
       body: { error: 'Server error: Could not create order' },
     }).as('createOrder');
 
+    // Visit the homepage
     cy.visit('http://localhost:5173/');
 
-    // חיפוש טיסה
+    // Fill in the flight search form
     cy.get('input[placeholder="From"]').type('London');
     cy.get('input[placeholder="To"]').type('Madrid');
     cy.get('input[type="date"]').type('2025-07-10');
     cy.get('select[name="passengers"]').select('1');
     cy.contains('Search Flights').click();
 
+    // Wait for the mocked search API to complete
     cy.wait('@searchFlights');
 
-    // מעבר להזמנה
+    // Click the booking button for the found flight
     cy.get('[data-testid="book-button"]').click();
 
-    // מילוי טופס הזמנה
+    // Fill in the booking form with valid data
     cy.get('input[placeholder="Enter your full name"]').type('John Doe');
     cy.get('input[placeholder="Enter your ID number"]').type('123456789');
     cy.get('input[placeholder="Enter your email"]').type('john@example.com');
 
-    // שליחת טופס
+    // Submit the booking form
     cy.contains('Confirm Booking').click();
 
+    // Wait for the mocked create order API to complete
     cy.wait('@createOrder');
 
-    // בדיקת הודעת שגיאה
+    // Assert that an error message is shown for the server error
     cy.contains(/server error: could not create order/i).should('be.visible');
   });
 });

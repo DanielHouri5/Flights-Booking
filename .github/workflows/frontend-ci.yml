@@ -4,10 +4,12 @@ on:
   push:
     branches: ['main', 'development', 'production']
     paths:
+      # Trigger workflow only when files in the Frontend directory change
       - 'Frontend/**'
   pull_request:
     branches: ['main', 'development', 'production']
     paths:
+      # Trigger workflow only when files in the Frontend directory change
       - 'Frontend/**'
 
 jobs:
@@ -15,19 +17,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository code
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # Install frontend dependencies
       - name: Install dependencies
         run: |
           cd Frontend
           npm install
 
+      # Build the frontend app (Vite)
       - name: Run build
         run: |
           cd Frontend
@@ -35,16 +41,19 @@ jobs:
         env:
           VITE_SERVICE_URL: ${{ secrets.VITE_SERVICE_URL }}
 
+      # Run linter for code quality
       - name: Run Linter
         run: |
           cd Frontend
           npm run lint
 
+      # Run unit and integration tests
       - name: Run Unit and Integration Tests
         run: |
           cd Frontend
           npm run test
 
+      # Run Cypress E2E tests (starts dev server in background)
       - name: Run Cypress E2E Tests
         run: |
           cd Frontend
@@ -55,29 +64,36 @@ jobs:
   deploy-to-cloud-run:
     needs: build-and-test
     runs-on: ubuntu-latest
+    # Deploy only on main or production branches
     if: github.ref == 'refs/heads/production' || github.ref == 'refs/heads/main'
     steps:
+      # Checkout the code again for deployment
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Authenticate to Google Cloud using service account key
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
+      # Set up Google Cloud SDK
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: devops-workshop-462511
 
+      # Configure Docker to push to Google Container Registry
       - name: Configure Docker for GCR
         run: gcloud auth configure-docker gcr.io --quiet
 
+      # Build and push the frontend Docker image to GCR
       - name: Build and push Frontend Docker image
         run: |
           docker build --build-arg VITE_SERVICE_URL=${{ secrets.VITE_SERVICE_URL }} -t gcr.io/devops-workshop-462511/flights-frontend Frontend/
           docker push gcr.io/devops-workshop-462511/flights-frontend
 
+      # Deploy the frontend image to Google Cloud Run
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy flights-frontend \

@@ -1,36 +1,38 @@
+# Docker Compose configuration for the SkyFlights project
+# This file defines services for the database, backend, frontend, and seeding
+
 version: '3.8'
 
 services:
   db:
-    image: postgres:15
+    image: postgres:15 # Use PostgreSQL version 15
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_USER: ${POSTGRES_USER} # Set via .env file or environment
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data # Persist database data
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
       interval: 10s
       timeout: 5s
       retries: 5
     ports:
-      - '5432:5432'
+      - '5432:5432' # Expose DB port
     networks:
       - app-network
 
   seed:
-    image: node:20
+    image: node:20 # Use Node.js 20 for seeding
     working_dir: /app
     volumes:
-      - ./Backend:/app
+      - ./Backend:/app # Mount backend code
     depends_on:
       db:
-        condition: service_healthy
+        condition: service_healthy # Wait for DB to be healthy
     command: >
-      sh -c "npm install sequelize pg && node seedFlights.js"
+      sh -c "npm install sequelize pg && node seedFlights.js"  # Install deps and seed DB
     environment:
       DATABASE_URL: postgres://postgres:pass@db:5432/flight_booking
     networks:
@@ -48,7 +50,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - '8080:8080'
+      - '8080:8080' # Expose backend API
     networks:
       - app-network
 
@@ -57,20 +59,20 @@ services:
       context: ./Frontend
       dockerfile: Dockerfile
       args:
-        - VITE_SERVICE_URL=${VITE_SERVICE_URL}
+        - VITE_SERVICE_URL=${VITE_SERVICE_URL} # Pass API URL to frontend build
     restart: unless-stopped
     depends_on:
       - backend
     environment:
       VITE_SERVICE_URL: ${VITE_SERVICE_URL}
     ports:
-      - '5173:8080'
+      - '5173:8080' # Expose frontend (Nginx) on 5173
     networks:
       - app-network
 
 volumes:
-  pgdata:
+  pgdata: # Named volume for Postgres data
 
 networks:
   app-network:
-    driver: bridge
+    driver: bridge # Use bridge network for inter-service communication

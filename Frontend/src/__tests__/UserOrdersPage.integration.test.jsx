@@ -1,15 +1,18 @@
-// src/__tests__/UserOrdersPage.integration.test.jsx
+// Integration test for UserOrdersPage: checks display of user orders and related flight details
+
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import UserOrdersPage from '../pages/UserOrdersPage';
 import api from '../services/api';
 
+// Mock the API service to control the response for orders and flights
 jest.mock('../services/api');
 
 describe('UserOrdersPage Integration', () => {
+  // Test: displays user orders and related flight details from the API
   test('displays user orders from API', async () => {
-    // מוק להזמנות
+    // Mock the API call to return a single user order
     api.get.mockResolvedValueOnce({
       data: [
         {
@@ -25,7 +28,7 @@ describe('UserOrdersPage Integration', () => {
       ],
     });
 
-    // מוק לטיסה עבור OrderCard
+    // Mock the API call to return flight details for the order
     api.get.mockResolvedValueOnce({
       data: {
         flight_id: 101,
@@ -39,6 +42,7 @@ describe('UserOrdersPage Integration', () => {
       },
     });
 
+    // Render the UserOrdersPage inside a MemoryRouter with the user_id route param
     render(
       <MemoryRouter initialEntries={['/user-orders/5']}>
         <Routes>
@@ -47,6 +51,7 @@ describe('UserOrdersPage Integration', () => {
       </MemoryRouter>
     );
 
+    // Wait for the order and user name to appear on the page
     await waitFor(() => {
       expect(screen.getByText(/Order id: #1/)).toBeInTheDocument();
       expect(screen.getByText(/Alice/)).toBeInTheDocument();

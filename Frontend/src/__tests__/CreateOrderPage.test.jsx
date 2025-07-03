@@ -1,9 +1,12 @@
+// Unit tests for the CreateOrderPage component
+// These tests cover form rendering, validation, and API integration
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import CreateOrderPage from '../pages/CreateOrderPage';
 import api from '../services/api';
 
-// mock ל־useLocation ו־useNavigate
+// Mock useLocation and useNavigate from react-router-dom
 jest.mock('react-router-dom', () => ({
   useLocation: () => ({
     state: {
@@ -17,14 +20,16 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => jest.fn(),
 }));
 
-// mock לרכיב BookingFlightCard
+// Mock the BookingFlightCard component
 jest.mock('../components/BookingFlightCard', () => () => (
   <div>Mocked BookingFlightCard</div>
 ));
 
+// Mock the API service
 jest.mock('../services/api');
 
 describe('CreateOrderPage', () => {
+  // Test: renders the form and flight data
   test('renders flight data and form inputs', () => {
     render(<CreateOrderPage />);
     expect(screen.getByText(/Book your flight/i)).toBeInTheDocument();
@@ -45,6 +50,7 @@ describe('CreateOrderPage', () => {
     ).toBeInTheDocument();
   });
 
+  // Test: shows error if required fields are empty
   test('shows error if required fields are empty', () => {
     render(<CreateOrderPage />);
     fireEvent.click(screen.getByText(/Confirm Booking/i));
@@ -53,6 +59,7 @@ describe('CreateOrderPage', () => {
     ).toBeInTheDocument();
   });
 
+  // Test: submits the form successfully and shows success message
   test('submits form successfully', async () => {
     api.post.mockResolvedValueOnce({
       data: { message: 'Order created successfully' },
@@ -76,6 +83,7 @@ describe('CreateOrderPage', () => {
     );
   });
 
+  // Test: handles error response from the server and shows error message
   test('handles error response from server', async () => {
     api.post.mockRejectedValueOnce({
       response: { data: { error: 'Server error' } },

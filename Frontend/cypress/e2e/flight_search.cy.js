@@ -1,6 +1,8 @@
+// Cypress E2E test: Search for flights and display mocked results
+
 describe('Flight Search - E2E Test', () => {
   it('should search and display mocked flight results', () => {
-    // זיהוי וזיוף קריאה ל-API
+    // Intercept and mock the API call for flight search
     cy.intercept('GET', '**/flights/search*', {
       statusCode: 200,
       body: [
@@ -16,22 +18,22 @@ describe('Flight Search - E2E Test', () => {
       ],
     }).as('mockSearch');
 
-    // כניסה לאתר המקומי שלך
+    // Visit the local site
     cy.visit('http://localhost:5173/');
 
-    // מילוי שדות טופס חיפוש
+    // Fill in the flight search form fields
     cy.get('input[placeholder="From"]').type('London');
     cy.get('input[placeholder="To"]').type('Madrid');
     cy.get('input[type="date"]').type('2025-07-10');
     cy.get('select[name="passengers"]').select('1');
 
-    // לחיצה על כפתור חיפוש
+    // Click the search button
     cy.contains('Search Flights').click();
 
-    // המתן לתשובת ה-API המזויפת
+    // Wait for the mocked API response
     cy.wait('@mockSearch');
 
-    // בדוק שהתוצאה מוצגת בהתאם לנתונים המזויפים
+    // Assert that the results are displayed according to the mocked data
     cy.get('[data-testid="departure-city"]').should('contain.text', 'London');
     cy.get('[data-testid="arrival-city"]').should('contain.text', 'Madrid');
     cy.get('[data-testid="flight-price"]').should('contain.text', '$180');

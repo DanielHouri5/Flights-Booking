@@ -1,6 +1,8 @@
+// Cypress E2E test: Display of upcoming flights on the HomePage
+
 describe('Upcoming Flights - Display on HomePage', () => {
   it('should display upcoming flights in two columns when there are many flights', () => {
-    // צור 6 טיסות לדוגמה
+    // Create 6 mock flights for the test
     const mockFlights = Array.from({ length: 6 }).map((_, i) => ({
       flight_id: `f${i + 1}`,
       origin: `City${i + 1}`,
@@ -11,27 +13,33 @@ describe('Upcoming Flights - Display on HomePage', () => {
       price: 100 + i * 10,
     }));
 
+    // Mock the API call for nearest flights
     cy.intercept('GET', '**/flights/nearest-flights', {
       statusCode: 200,
       body: mockFlights,
     }).as('nearestFlights');
 
+    // Visit the homepage
     cy.visit('http://localhost:5173/');
 
+    // Wait for the mocked nearest flights API to complete
     cy.wait('@nearestFlights');
 
-    // ודא שכל הטיסות מוצגות
-    mockFlights.forEach(flight => {
+    // Assert that all mock flights are displayed (origin and destination)
+    mockFlights.forEach((flight) => {
       cy.contains(flight.origin).scrollIntoView().should('be.visible');
       cy.contains(flight.destination).scrollIntoView().should('be.visible');
     });
 
-    // ודא שיש שני טורים (flights-column)
+    // Assert that there are two columns for flights
     cy.get('.flights-double-column .flights-column').should('have.length', 2);
 
-    // ודא שכל טור מכיל לפחות טיסה אחת
+    // Assert that each column contains at least one flight card
     cy.get('.flights-double-column .flights-column').each(($col) => {
-      cy.wrap($col).find('.flight-card-wrapper, .flight-card').its('length').should('be.gte', 1);
+      cy.wrap($col)
+        .find('.flight-card-wrapper, .flight-card')
+        .its('length')
+        .should('be.gte', 1);
     });
   });
 });

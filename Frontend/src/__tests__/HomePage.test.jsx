@@ -1,20 +1,25 @@
+// Unit tests for the HomePage component
+// These tests cover rendering, API integration, and search functionality
+
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import HomePage from '../pages/HomePage';
 import React from 'react';
 import * as apiModule from '../services/api';
 
-// נשתמש ב-mock לרכיב FlightsList
+// Mock the FlightsList component to isolate HomePage logic
 jest.mock('../pages/FlightsList', () => () => <div>Mocked FlightsList</div>);
 
-// נשתמש ב-mock לקריאת axios
+// Mock the API service (axios instance)
 jest.mock('../services/api');
 
 describe('HomePage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    // Suppress console.error output during tests
     jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
+  // Test: renders the header and search input fields
   test('renders the header and search inputs', () => {
     render(<HomePage />);
     expect(screen.getByText(/Find your perfect flight/i)).toBeInTheDocument();
@@ -25,6 +30,7 @@ describe('HomePage', () => {
     ).toBeInTheDocument();
   });
 
+  // Test: loads nearest flights and renders them when available
   test('loads nearest flights and renders them when available', async () => {
     const mockFlights = [
       { flight_id: 'f1', destination: 'Paris' },
@@ -38,7 +44,7 @@ describe('HomePage', () => {
 
     await waitFor(() => {
       const flights = screen.getAllByText(/Mocked FlightsList/i);
-      expect(flights.length).toBe(2); // שני טורים
+      expect(flights.length).toBe(2); // Two columns
     });
 
     expect(apiModule.default.get).toHaveBeenCalledWith(
@@ -46,12 +52,14 @@ describe('HomePage', () => {
     );
   });
 
+  // Test: shows search flights view after clicking search
   test('shows search flights view after clicking search', async () => {
-    const mockFlights = []; // נדרש כדי למנוע שגיאה של undefined.data
+    const mockFlights = []; // Prevents undefined.data error
     apiModule.default.get.mockResolvedValueOnce({ data: mockFlights });
 
     render(<HomePage />);
 
+    // Fill in the search form
     fireEvent.change(screen.getByPlaceholderText(/From/i), {
       target: { value: 'Tel Aviv' },
     });
@@ -62,8 +70,10 @@ describe('HomePage', () => {
       target: { value: '2' },
     });
 
+    // Click the search button
     fireEvent.click(screen.getByRole('button', { name: /Search Flights/i }));
 
+    // Assert that the FlightsList is rendered for search results
     expect(await screen.findByText(/Mocked FlightsList/i)).toBeInTheDocument();
   });
 });

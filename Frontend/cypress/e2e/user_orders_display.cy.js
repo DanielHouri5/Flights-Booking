@@ -1,6 +1,8 @@
+// Cypress E2E test: Display user orders and related flight details
+
 describe('User Orders - Display Orders', () => {
   it('should display user orders and flight details', () => {
-    // Mock להזמנות של המשתמש
+    // Mock the API response for fetching user orders
     cy.intercept('GET', '**/orders/read-orders/123456789', {
       statusCode: 200,
       body: [
@@ -17,7 +19,7 @@ describe('User Orders - Display Orders', () => {
       ],
     }).as('getOrders');
 
-    // Mock לטיסה עבור OrderCard
+    // Mock the API response for fetching flight details for the order
     cy.intercept('GET', '**/flights/read-flight/MOCK123', {
       statusCode: 200,
       body: {
@@ -32,26 +34,28 @@ describe('User Orders - Display Orders', () => {
       },
     }).as('getFlight');
 
+    // Visit the homepage
     cy.visit('http://localhost:5173/');
 
-    // פתח את המודל של "My Orders"
+    // Open the "My Orders" modal
     cy.contains('My Orders').click();
 
-    // הזן ת"ז ולחץ Submit
+    // Enter the user ID and submit the form
     cy.get('input[placeholder="ID Number"]').type('123456789');
     cy.contains('Submit').click();
 
+    // Wait for both the orders and flight details API responses
     cy.wait('@getOrders');
     cy.wait('@getFlight');
 
-    // בדוק שמוצגים פרטי ההזמנה
+    // Assert that the order details are displayed
     cy.contains(/Order id: #1/i).should('be.visible');
     cy.contains(/John Doe/i).should('be.visible');
     cy.contains(/john@example.com/i).should('be.visible');
     cy.get('[data-testid="order-passengers"]').should('contain.text', '2');
     cy.get('[data-testid="order-total-price"]').should('contain.text', '360');
 
-    // בדוק שמוצגים פרטי הטיסה
+    // Assert that the flight details are displayed
     cy.contains(/London/i).should('be.visible');
     cy.contains(/Madrid/i).should('be.visible');
     cy.contains(/\$180/).should('be.visible');

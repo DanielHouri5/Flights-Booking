@@ -1,6 +1,8 @@
+// Cypress E2E test: Booking a flight successfully
+
 describe('Flight Booking - Successful Order', () => {
   it('should allow user to book a flight successfully', () => {
-    // Mock תוצאת חיפוש טיסה
+    // Mock the flight search API response
     cy.intercept('GET', '**/flights/search-flights*', {
       statusCode: 200,
       body: [
@@ -16,37 +18,40 @@ describe('Flight Booking - Successful Order', () => {
       ],
     }).as('searchFlights');
 
-    // Mock יצירת הזמנה מוצלחת
+    // Mock a successful order creation API response
     cy.intercept('POST', '**/orders/create-order', {
       statusCode: 200,
       body: { message: 'Order created successfully' },
     }).as('createOrder');
 
+    // Visit the homepage
     cy.visit('http://localhost:5173/');
 
-    // חיפוש טיסה
+    // Fill in the flight search form
     cy.get('input[placeholder="From"]').type('London');
     cy.get('input[placeholder="To"]').type('Madrid');
     cy.get('input[type="date"]').type('2025-07-10');
     cy.get('select[name="passengers"]').select('1');
     cy.contains('Search Flights').click();
 
+    // Wait for the mocked search API to complete
     cy.wait('@searchFlights');
 
-    // מעבר להזמנה
+    // Click the booking button for the found flight
     cy.get('[data-testid="book-button"]').click();
 
-    // מילוי טופס הזמנה
+    // Fill in the booking form with valid data
     cy.get('input[placeholder="Enter your full name"]').type('John Doe');
     cy.get('input[placeholder="Enter your ID number"]').type('123456789');
     cy.get('input[placeholder="Enter your email"]').type('john@example.com');
 
-    // שליחת טופס
+    // Submit the booking form
     cy.contains('Confirm Booking').click();
 
+    // Wait for the mocked create order API to complete
     cy.wait('@createOrder');
 
-    // בדיקת הודעת הצלחה
+    // Assert that a success message is shown after booking
     cy.contains(/Order successfully placed!/i).should('be.visible');
   });
 });

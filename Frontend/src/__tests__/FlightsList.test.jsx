@@ -1,13 +1,18 @@
+// Unit tests for the FlightsList component
+// These tests check loading state and rendering with initial flight data
+
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import FlightsList from '../pages/FlightsList';
 
 describe('FlightsList', () => {
+  // Test: shows loading text when the component is first rendered
   test('shows loading text initially', () => {
     render(<FlightsList />);
     expect(screen.getByText(/Loading flights/i)).toBeInTheDocument();
   });
 
+  // Test: renders without crashing when initialFlights prop is provided
   test('renders without crashing when initialFlights provided', () => {
     const flights = [
       {
@@ -22,6 +27,6 @@ describe('FlightsList', () => {
     ];
 
     render(<FlightsList initialFlights={flights} />);
-    // אם לא נזרקת שגיאה – זה מספיק כרגע.
+    // If no error is thrown, the test passes for now.
   });
 });
