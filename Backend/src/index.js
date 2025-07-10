@@ -8,6 +8,7 @@ import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+console.log('Flights');
 
 // Enable CORS for all origins
 app.use(
