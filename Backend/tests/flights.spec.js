@@ -30,7 +30,7 @@ describe('Flights API Test', () => {
 
   // Test: should return a flight by its ID
   test('should return a flight by ID', async () => {
-    const flightId = 4222;
+    const flightId = 1;
     const res = await request(app)
       .get(`/flights/read-flight/${flightId}`)
       .expect(200);
@@ -54,9 +54,9 @@ describe('Flights API Test', () => {
     const res = await request(app)
       .get('/flights/search-flights')
       .query({
-        origin: 'Paris',
+        origin: 'Lisbon',
         destination: 'Venice',
-        departure_date: '2025-07-01',
+        departure_date: '2025-07-24',
         passengers: 1,
       })
       .expect(200);

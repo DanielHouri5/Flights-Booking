@@ -8,7 +8,7 @@ jest.setTimeout(10000); // Important: set outside of beforeAll
 
 // Test suite for Order API endpoints
 describe('Order Test', () => {
-  const userId = 99999;
+  const userId = 1;
   let createdOrder = null;
 
   // Start the test server before running tests
@@ -29,9 +29,9 @@ describe('Order Test', () => {
       user_id: userId,
       user_name: 'Test User',
       user_email: 'test@example.com',
-      flight_id: 4222,
+      flight_id: 1,
       order_date: new Date().toISOString(),
-      price: 258,
+      price: 655,
       num_passengers: '1',
     };
 
