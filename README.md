@@ -21,8 +21,7 @@ A full-stack flight booking system with a modern React frontend, Node.js/Express
 1. **Clone the repository**
 
    ```bash
-   # Replace <your-repo-url> with the actual repository URL
-   git clone <your-repo-url>
+   git clone <https://github.com/DanielHouri5/Flights-Booking.git>
    cd Flights-Booking
    ```
 
