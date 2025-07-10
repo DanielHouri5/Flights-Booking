@@ -129,68 +129,55 @@ A full-stack flight booking system with a modern React frontend, Node.js/Express
 ## 🏗️ Project Structure & Design
 
 ```
-Backend/      # Node.js/Express API, DB models, tests
-Frontend/     # React app, Cypress, unit/integration tests
-.github/      # CI/CD workflows
-scripts/      # Automation scripts for setup/deployment
-```
-
-- **Backend**: RESTful API, PostgreSQL models, business logic, and tests
-- **Frontend**: React SPA, API integration, Cypress E2E, Jest unit/integration tests
-- **CI/CD**: Automated pipelines for build, test, and deploy
-- **Docker**: Containerized services for easy local and cloud deployment
-
 Devops-Flights-Booking/
-│
-├── .github/
-│ └── workflows/
-│ ├── backend-ci.yml # Backend CI/CD pipeline
-│ └── frontend-ci.yml # Frontend CI/CD pipeline
-│
-├── Backend/
-│ ├── src/
-│ │ ├── controllers/ # Express controllers
-│ │ ├── data-access/ # DB models & access
-│ │ ├── routes/ # API routes
-│ │ ├── services/ # Business logic
-│ │ └── index.js # Main server entry
-│ ├── tests/ # Unit & integration tests
-│ ├── .env # Backend-specific environment variables
-│ ├── .eslintrc.json # ESLint config
-│ ├── babel.config.cjs # Babel config
-│ ├── Dockerfile # Backend Docker build
-│ ├── jest.config.mjs # Jest config
-│ ├── package.json # Backend dependencies & scripts
-│ └── seedFlights.js # DB seeding script
-│
-├── Frontend/
-│ ├── cypress/ # Cypress E2E tests
-│ ├── src/ # React app source
-│ │ ├── **tests**/ # Unit & integration tests (Jest/RTL)
-│ │ ├── components/ # Reusable React components (buttons, forms, etc.)
-│ │ ├── pages/ # React pages (HomePage, etc.)
-│ │ ├── services/ # API service (Axios)
-│ │ ├── App.css # Global styles for the app
-│ │ ├── App.jsx # Main React app
-│ │ ├── index.css # Global styles  
-│ │ └── main.jsx # React entry point (creates root and renders App)
-│ ├── babel.config.cjs # Babel config
-│ ├── cypress.config.js # Cypress config
-│ ├── Dockerfile # Frontend Docker build
-│ ├── eslint.config.js # ESLint config
-│ ├── index.html # HTML entry
-│ ├── jest.setup.js # Jest setup
-│ ├── nginx.conf # Nginx config for static serving
-│ ├── package.json # Frontend dependencies & scripts
-│ ├── vite.config.js # Vite config  
-├── scripts/ # Automation scripts for setup/deployment
-│ ├── setup-dev.sh # Local dev setup script
-│ └── setup-prod.sh # Production deploy script
-├── .env # Root environment variables (DB, API URLs)
-├── .gitattributes # Git line ending rules (LF for .sh scripts)
-├── .gitignore # Git ignore rules
-├── docker-compose.yml # Multi-service orchestration
-├── README.md # Project documentation
+├── .github/                # CI/CD workflows
+│   └── workflows/
+│       ├── backend-ci.yml  # Backend CI/CD pipeline
+│       └── frontend-ci.yml # Frontend CI/CD pipeline
+├── Backend/                # Node.js/Express API
+│   ├── src/
+│   │   ├── controllers/    # Express controllers
+│   │   ├── data-access/    # DB models & access
+│   │   ├── routes/         # API routes
+│   │   ├── services/       # Business logic
+│   │   └── index.js        # Main server entry
+│   ├── tests/              # Unit & integration tests
+│   ├── .env                # Backend-specific environment variables
+│   ├── .eslintrc.json      # ESLint config
+│   ├── babel.config.cjs    # Babel config
+│   ├── Dockerfile          # Backend Docker build
+│   ├── jest.config.mjs     # Jest config
+│   ├── package.json        # Backend dependencies & scripts
+│   └── seedFlights.js      # DB seeding script
+├── Frontend/               # React app
+│   ├── cypress/            # Cypress E2E tests
+│   ├── src/                # React app source
+│   │   ├── __tests__/      # Unit & integration tests (Jest/RTL)
+│   │   ├── components/     # Reusable React components
+│   │   ├── pages/          # React pages
+│   │   ├── services/       # API service (Axios)
+│   │   ├── App.css         # Global styles
+│   │   ├── App.jsx         # Main React app
+│   │   ├── index.css       # Global styles
+│   │   └── main.jsx        # React entry point
+│   ├── babel.config.cjs    # Babel config
+│   ├── cypress.config.js   # Cypress config
+│   ├── Dockerfile          # Frontend Docker build
+│   ├── eslint.config.js    # ESLint config
+│   ├── index.html          # HTML entry
+│   ├── jest.setup.js       # Jest setup
+│   ├── nginx.conf          # Nginx config for static serving
+│   ├── package.json        # Frontend dependencies & scripts
+│   └── vite.config.js      # Vite config
+├── scripts/                # Automation scripts for setup/deployment
+│   ├── setup-dev.sh        # Local dev setup script
+│   └── setup-prod.sh       # Production deploy script
+├── .env                    # Root environment variables (DB, API URLs)
+├── .gitattributes          # Git line ending rules (LF for .sh scripts)
+├── .gitignore              # Git ignore rules
+├── docker-compose.yml      # Multi-service orchestration
+├── README.md               # Project documentation
+```
 
 ---
 
